@@ -6,9 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     agents: [
-      { id: 1, name: 'Dupont', level: 3, busy: false, rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 2, name: 'Moreau', level: 2, busy: false, rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', level: 1, busy: false, rank: "Student Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 1, name: 'Dupont', level: 3, busy: false, radio: "Sierra 1", rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 2, name: 'Moreau', level: 2, busy: false, radio: "Oscar 1", rank: "Officer",  equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
     ],
     mission: Object,
     missionList: [
@@ -105,6 +105,7 @@ export default new Vuex.Store({
           state.mission.assignedAgentsId.splice(index, 1);
         }
       }
+      console.log("mission: " + state.mission.assignedAgentsId);
     },
     SET_MISSION_STATUS(state, status) {
       state.mission.status = status
