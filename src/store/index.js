@@ -6,9 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     agents: [
-      { id: 1, name: 'Dupont', level: 3, busy: false },
-      { id: 2, name: 'Moreau', level: 2, busy: false },
-      { id: 3, name: 'Nguyen', level: 1, busy: false },
+      { id: 1, name: 'Dupont', level: 3, busy: false, rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 2, name: 'Moreau', level: 2, busy: false, rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', level: 1, busy: false, rank: "Student Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
     ],
     mission: Object,
     missionList: [
@@ -97,7 +97,6 @@ export default new Vuex.Store({
       if (agent && !state.mission.assignedAgentsId.includes(agentId)) {
         agent.busy = true
         state.mission.assignedAgentsId.push(agentId)
-        console.log("before: " + state.mission.assignedAgentsId);
       }
       else {
         agent.busy = false;
@@ -105,7 +104,6 @@ export default new Vuex.Store({
         if (index !== -1) {
           state.mission.assignedAgentsId.splice(index, 1);
         }
-        console.log("after: " + state.mission.assignedAgentsId);
       }
     },
     SET_MISSION_STATUS(state, status) {
@@ -118,22 +116,31 @@ export default new Vuex.Store({
       })
       state.mission.assignedAgentsId = []
     },
-    SET_CHOSEN_MISSION(state, index){
+    SET_CHOSEN_MISSION(state, index) {
       state.mission = state.missionList[index];
-      console.log("state.mission: " + state.mission.title);
     }
   },
   actions: {
-    chooseMission({state, commit}){
+    chooseMission({ state, commit }) {
       let index = Math.round(Math.random() * state.missionList.length);
-      console.log("index: " + index);
       commit("SET_CHOSEN_MISSION", index);
     },
     resolveMission({ state, commit, dispatch }) {
+      this.patrolStatus = "🚓💨 En route"
+      setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "10000"); // 1000 ms = 1 seconde
       const assignedIds = state.mission.assignedAgentsId
       const assignedAgents = state.agents.filter(a => assignedIds.includes(a.id))
 
-      const totalForce = assignedAgents.reduce((sum, agent) => sum + agent.level, 0)
+      const totalForce = assignedAgents.reduce((sum, agent) => 
+        sum 
+      + agent.level 
+      + (agent.equipment.includes("handgun") ? 1 : 0) 
+      + (agent.equipment.includes("police-vest") ? 1 : 0) 
+      + (agent.equipment.includes("handcuffs") ? 1 : 0) 
+      + (agent.equipment.includes("taser") ? 1 : 0) 
+      + (agent.equipment.includes("nightstick") ? 1 : 0), 
+      0)
+      console.log("totalForce: " + totalForce);
 
       const chance = dispatch("estimateSuccessProbability", {
         totalForce,

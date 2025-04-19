@@ -6,14 +6,21 @@
             <h2>👮 Agents disponibles</h2>
             <div class="agent-list">
                 <div class="agent-card" v-for="agent in agents" :key="agent.id" :class="{ busy: agent.busy }">
-                    <h3>{{ agent.name }}</h3>
-                    <p>Niveau : {{ agent.level }}</p>
+                    <h3><span class="rank">{{ agent.rank }}</span> {{ agent.name }}</h3>
+                    <!-- <p>Niveau : {{ agent.level }}</p> -->
                     <span v-if="agent.busy" class="status">🚨 En mission
                         <button @click="removeAgent(agent.id)">❌ Retirer de la mission</button>
                     </span>
                     <span v-else>🚔 En patrouille
                         <button @click="assignAgent(agent.id)">Assigner à la mission</button>
                     </span>
+                    <div class="equipment-bag">
+                        <img v-if="agent.equipment.includes('handcuffs')" class="equipment" src="../assets/handcuffs.svg" alt="handcuffs">
+                        <img v-if="agent.equipment.includes('nightstick')" class="equipment" src="../assets/nightstick.svg" alt="nightstick">
+                        <img v-if="agent.equipment.includes('police-vest')" class="equipment" src="../assets/police-vest.svg" alt="police-vest">
+                        <img v-if="agent.equipment.includes('handgun')" class="equipment" src="../assets/handgun.svg" alt="handgun">
+                        <img v-if="agent.equipment.includes('taser')" class="equipment" src="../assets/taser.svg" alt="taser">
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,12 +29,11 @@
             <h2>📋 Mission actuelle</h2>
             <div class="mission-card">
                 <h3>{{ mission.title }}</h3>
-                <p>Difficulté : {{ mission.difficulty }}</p>
+                <!-- <p>Difficulté : {{ mission.difficulty }}</p> -->
                 <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
                 <button v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'" @click="resolve">
                     Résoudre la mission
                 </button>
-                <button @click="decompte">Décompte</button>
                 <p v-if="patrolStatus !== ''">ETA: {{ patrolStatus }}</p>
             </div>
         </div>
@@ -79,11 +85,10 @@ export default {
             }
         },
         resolve() {
-            this.resolveMission()
-        },
-        decompte() {
             this.patrolStatus = "🚓💨 En route"
-            setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "10000"); // 1000 ms = 1 seconde
+            setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "1000"); // 1000 ms = 1 seconde
+            setTimeout(() => { this.resolveMission() }, "2000"); // 1000 ms = 1 seconde
+
         }
     }
 }
@@ -95,6 +100,16 @@ export default {
     color: #fff;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
+}
+
+.equipment-bag {
+    display: flex;
+    margin-top: 20px;
+}
+
+.equipment {
+    width: 30px;
+    margin: auto;
 }
 
 h1,
@@ -118,7 +133,7 @@ h2 {
     background: #2e3b4e;
     padding: 15px;
     border-radius: 10px;
-    width: 200px;
+    width: 220px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -133,6 +148,10 @@ h2 {
 .status {
     color: #ff9800;
     font-weight: bold;
+}
+
+.rank {
+    color: gold;
 }
 
 button {
