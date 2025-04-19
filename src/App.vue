@@ -14,3 +14,10 @@ export default {
   }
 }
 </script>
+<style>
+  body{
+    background-color: #1e2a38;
+    display: flex;
+    justify-content: center;
+  }
+</style>

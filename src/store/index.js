@@ -10,13 +10,86 @@ export default new Vuex.Store({
       { id: 2, name: 'Moreau', level: 2, busy: false },
       { id: 3, name: 'Nguyen', level: 1, busy: false },
     ],
-    mission: {
-      id: 101,
-      title: 'Cambriolage à la banque',
-      difficulty: 4,
-      assignedAgentsId: [],
-      status: 'pending'
-    }
+    mission: Object,
+    missionList: [
+      {
+        id: 1,
+        title: 'Cambriolage à la banque',
+        difficulty: 4,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 2,
+        title: 'Vol de voiture en centre-ville',
+        difficulty: 2,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 3,
+        title: 'Dispute domestique',
+        difficulty: 1,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 4,
+        title: 'Tag sur bâtiment public',
+        difficulty: 1,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 5,
+        title: 'Rixe entre bandes rivales',
+        difficulty: 5,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 6,
+        title: 'Cambriolage de nuit dans une bijouterie',
+        difficulty: 6,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 7,
+        title: 'Manifestation non déclarée',
+        difficulty: 3,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 8,
+        title: 'Prise d’otages dans une école',
+        difficulty: 8,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 9,
+        title: 'Appel anonyme pour colis suspect',
+        difficulty: 4,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 10,
+        title: 'Poursuite de suspect en fuite',
+        difficulty: 5,
+        assignedAgentsId: [],
+        status: 'pending'
+      },
+      {
+        id: 11,
+        title: 'Falsification de documents officiels',
+        difficulty: 3,
+        assignedAgentsId: [],
+        status: 'pending'
+      }
+    ]
   },
   mutations: {
     SET_ASSIGN_AGENT(state, agentId) {
@@ -44,9 +117,18 @@ export default new Vuex.Store({
         if (agent) agent.busy = false
       })
       state.mission.assignedAgentsId = []
+    },
+    SET_CHOSEN_MISSION(state, index){
+      state.mission = state.missionList[index];
+      console.log("state.mission: " + state.mission.title);
     }
   },
   actions: {
+    chooseMission({state, commit}){
+      let index = Math.round(Math.random() * state.missionList.length);
+      console.log("index: " + index);
+      commit("SET_CHOSEN_MISSION", index);
+    },
     resolveMission({ state, commit, dispatch }) {
       const assignedIds = state.mission.assignedAgentsId
       const assignedAgents = state.agents.filter(a => assignedIds.includes(a.id))
