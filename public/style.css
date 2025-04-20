@@ -23,6 +23,30 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
+.agent-not-selected {
+    margin-top: 10px;
+    padding: 6px;
+    background: #00bcd4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 0.9em;
+}
+
+.agent-selected {
+    margin-top: 10px;
+    padding: 6px;
+    background: goldenrod;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 0.9em;
+}
+
 .equipment-bag {
     display: flex;
     margin-top: 20px;
@@ -57,6 +81,14 @@ body {
     justify-content: space-between;
 }
 
+.grid-container-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 3 colonnes */
+    gap: 10px;
+    /* espace entre les divs */
+}
+
 .grid-container-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -87,11 +119,15 @@ body {
 }
 
 .list-car {
-    background: url('../assets/police-car-patroling.svg') no-repeat left top;
+    background: url('./assets/police-car-patroling.svg') no-repeat left top;
     height: 34px;
     padding-top: 7px;
     padding-left: 48px;
     padding-right: 5px;
+}
+
+.text-left {
+    text-align: left;
 }
 
 h1,

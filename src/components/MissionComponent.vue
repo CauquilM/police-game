@@ -2,17 +2,27 @@
     <div>
         <h3>{{ mission.title }}</h3>
         <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
+        <div class="grid-container-2">
+            <div class="grid-items" v-for="(agent) in agents" :key="agent.id">
+                <div v-if="agent.busy" class="agent-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
+                    {{ agent.radio }}
+                </div>
+                <div v-else class="agent-not-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
+                    {{ agent.radio }}
+                </div>
+            </div>
+        </div>
         <div v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'">
             <p class="mb-5">Engaged units:</p>
             <ul class="list">
-                <li class="list-car" v-for="(agentId, index) in mission.assignedAgentsId" :key="index">
+                <li class="list-car text-left" v-for="(agentId, index) in mission.assignedAgentsId" :key="index">
                     {{ getAgentName(agentId) }}
                 </li>
             </ul>
         </div>
         <div class="d-flex justify-content-space-around">
             <button class="button-green" v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'"
-                @click="resolve">
+                @click="resolve(mission.id)">
                 Accepter
             </button>
             <button class="button-red" v-if="mission.assignedAgentsId.length == 0 && mission.status === 'pending'"
@@ -30,7 +40,7 @@ export default {
     name: "MissionComponent",
     data() {
         return {
-            patrolStatus: ''
+            patrolStatus: '',
         }
     },
     props: {
@@ -57,20 +67,14 @@ export default {
     methods: {
         ...mapMutations(['SET_ASSIGN_AGENT']),
         ...mapActions(['resolveMission', 'refuseMission']),
-        assignAgent(agentId) {
-            if (!this.mission.assignedAgentId) {
-                this.SET_ASSIGN_AGENT(agentId)
-            }
+        assignAgent({ agentId: agentId, missionId: missionId }) {
+            console.log("agentId front: " + agentId + " mission: " + missionId);
+            this.SET_ASSIGN_AGENT({ agentId, missionId });
         },
-        removeAgent(agentId) {
-            if (!this.mission.assignedAgentId) {
-                this.SET_ASSIGN_AGENT(agentId)
-            }
-        },
-        resolve() {
+        resolve(missionId) {
             this.patrolStatus = "🚓💨 En route"
             setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "1000"); // 1000 ms = 1 seconde
-            setTimeout(() => { this.resolveMission() }, "2000"); // 1000 ms = 1 seconde
+            setTimeout(() => { this.resolveMission(missionId) }, "2000"); // 1000 ms = 1 seconde
 
         },
         getAgentName(id) {

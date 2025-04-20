@@ -10,19 +10,18 @@ export default new Vuex.Store({
       { id: 2, name: 'Moreau', level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
       { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] }
     ],
-    mission: Object,
     missionsCurrent: [],
     missionStore: [
       {
         id: 1,
-        title: 'Cambriolage à la banque',
+        title: "Cambriolage à la banque",
         difficulty: 4,
         assignedAgentsId: [],
         status: 'pending'
       },
       {
         id: 2,
-        title: 'Vol de voiture en centre-ville',
+        title: "Vol de voiture en centre-ville",
         difficulty: 2,
         assignedAgentsId: [],
         status: 'pending'
@@ -93,30 +92,32 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
-    SET_ASSIGN_AGENT(state, agentId) {
+    SET_ASSIGN_AGENT(state, { agentId: agentId, missionId: missionId }) {
       const agent = state.agents.find(a => a.id === agentId)
-      if (agent && !state.mission.assignedAgentsId.includes(agentId)) {
+      const indexMission = state.missionsCurrent.findIndex(m => m.id === missionId);
+      const mission = state.missionsCurrent[indexMission];
+      if (agent && !mission.assignedAgentsId.includes(agentId)) {
+        console.log("enter");
         agent.busy = true
-        state.mission.assignedAgentsId.push(agentId)
+        mission.assignedAgentsId.push(agentId)
       }
       else {
         agent.busy = false;
-        var index = state.mission.assignedAgentsId.indexOf(agentId);
-        if (index !== -1) {
-          state.mission.assignedAgentsId.splice(index, 1);
+        var indexAgent = mission.assignedAgentsId.indexOf(agentId);
+        if (indexAgent !== -1) {
+          mission.assignedAgentsId.splice(indexAgent, 1);
         }
       }
-      console.log("mission: " + state.mission.assignedAgentsId);
     },
-    SET_MISSION_STATUS(state, status) {
-      state.mission.status = status
+    SET_MISSION_STATUS(state, {mission, status}) {
+      mission.status = status
     },
-    FREE_ASSIGNED_AGENTS(state) {
-      state.mission.assignedAgentsId.forEach(id => {
+    FREE_ASSIGNED_AGENTS(state, mission) {
+      mission.assignedAgentsId.forEach(id => {
         const agent = state.agents.find(a => a.id === id)
         if (agent) agent.busy = false
       })
-      state.mission.assignedAgentsId = []
+      mission.assignedAgentsId = []
     },
     SET_CHOSEN_MISSION(state, index) {
       console.log("mutation: " + state.missionStore[index].title);
@@ -131,14 +132,18 @@ export default new Vuex.Store({
       commit("SET_REFUSE_MISSION", index);
     },
     chooseMission({ state, commit }) {
-      let index = Math.round(Math.random() * state.missionStore.length);
+      let index = Math.round(Math.random() * state.missionStore.length - 1);
       console.log("index: " + index);
       commit("SET_CHOSEN_MISSION", index);
     },
-    resolveMission({ state, commit, dispatch }) {
+    resolveMission({ state, commit, dispatch }, missionId) {
       this.patrolStatus = "🚓💨 En route"
       setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "10000"); // 1000 ms = 1 seconde
-      const assignedIds = state.mission.assignedAgentsId
+
+      const indexMission = state.missionsCurrent.findIndex(m => m.id === missionId);
+      const mission = state.missionsCurrent[indexMission];
+
+      const assignedIds = mission.assignedAgentsId
       const assignedAgents = state.agents.filter(a => assignedIds.includes(a.id))
 
       const totalForce = assignedAgents.reduce((sum, agent) =>
@@ -154,13 +159,13 @@ export default new Vuex.Store({
 
       const chance = dispatch("estimateSuccessProbability", {
         totalForce,
-        difficulty: state.mission.difficulty
+        difficulty: mission.difficulty
       })
 
       Promise.resolve(chance).then(probability => {
         const success = Math.random() < probability
-        commit("SET_MISSION_STATUS", success ? 'success' : 'fail')
-        commit("FREE_ASSIGNED_AGENTS")
+        commit("SET_MISSION_STATUS", {mission: mission,status: success ? 'success' : 'fail'})
+        commit("FREE_ASSIGNED_AGENTS", mission)
       })
     },
     estimateSuccessProbability(_, { totalForce, difficulty }) {

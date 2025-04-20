@@ -14,14 +14,12 @@
                 <img class="w-30" src="../assets/crime-scene.svg" alt="crime-scene">
                 <span class="ml-5">En mission</span>
             </div>
-            <button @click="removeAgent(agent.id)">❌ Retirer de la mission</button>
         </div>
         <div class="d-flex flex-direction-column" v-else>
             <div class="d-flex">
                 <img class="w-30" src="../assets/police-car-patroling.svg" alt="police-car-patroling">
                 <span class="ml-5">En patrouille</span>
             </div>
-            <button @click="assignAgent(agent.id)">Assigner à la mission</button>
         </div>
         <div class="equipment-bag">
             <img v-if="agent.equipment.includes('handcuffs')" class="equipment" src="../assets/handcuffs.svg"
