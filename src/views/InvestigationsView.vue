@@ -2,7 +2,8 @@
     <div>
         <h1>Investigations Bureau</h1>
         <div class="grid-container-3">
-            <EnqueteCambriolage class="grid-items" v-for="enquete in enquetes" :key="enquete" :enquete="enquete" />
+            <EnqueteCambriolage class="grid-items" v-for="enquete in enquetes" :key="enquete.id" :enquete="enquete"
+                @click="this.$router.push('/test')" />
         </div>
     </div>
 </template>
@@ -154,6 +155,11 @@ export default {
             }
 
             ]
+        }
+    },
+    methods: {
+        openInvestigations() {
+
         }
     }
 }
