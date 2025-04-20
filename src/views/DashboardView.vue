@@ -4,8 +4,8 @@
 
         <div class="section agents">
             <h2>👮 Agents disponibles</h2>
-            <div class="agent-list">
-                <div class="agent-card" v-for="agent in agents" :key="agent.id" :class="{ busy: agent.busy }">
+            <div class="grid-container-4">
+                <div class="agent-card grid-item" v-for="agent in agents" :key="agent.id" :class="{ busy: agent.busy }">
                     <h3 class="d-flex justify-content-flex-start"><img class="w-30" src="../assets/police-badge.svg"
                             alt="police-badge">
                         <span class="rank ml-5 mr-5">{{ agent.rank }}
@@ -15,7 +15,7 @@
                         <img class="w-30" src="../assets/police-radio.svg" alt="police-radio">
                         <span class="ml-5">{{ agent.radio }}</span>
                     </h3>
-                    <!-- <p>Niveau : {{ agent.level }}</p> -->
+                    <p>Niveau : {{ agent.level }}</p>
                     <div v-if="agent.busy" class="d-flex flex-direction-column">
                         <div class="d-flex">
                             <img class="w-30" src="../assets/crime-scene.svg" alt="crime-scene">
@@ -50,7 +50,7 @@
             <h2>📋 Missions actuelles</h2>
             <div class="mission-card">
                 <h3>{{ mission.title }}</h3>
-                <!-- <p>Difficulté : {{ mission.difficulty }}</p> -->
+                <p>Difficulté : {{ mission.difficulty }}</p>
                 <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
                 <div v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'">
                     <p class="mb-5">Engaged units:</p>
@@ -73,6 +73,38 @@
                 </div>
             </div>
         </div>
+        <div class="section mission">
+            <h2>📋 Missions TEMP actuelles</h2>
+            <div class="grid-container-3">
+                <div v-for="(mission, index) in missionsCurrent" :key="index" class="mission-card grid-item">
+                    <h3>{{ mission.title }} / index {{ index }}</h3>
+                    <p>Difficulté : {{ mission.difficulty }}</p>
+                    <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
+                    <div v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'">
+                        <p class="mb-5">Engaged units:</p>
+                        <ul class="list">
+                            <li class="list-car" v-for="(agentId, index) in mission.assignedAgentsId" :key="index">
+                                {{ getAgentName(agentId) }}
+                            </li>
+                        </ul>
+                    </div>
+                    <button>Test id</button>
+                    <div class="d-flex justify-content-space-around">
+                        <button class="button-green"
+                            v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'" @click="resolve">
+                            Accepter
+                        </button>
+                        <button class="button-red"
+                            v-if="mission.assignedAgentsId.length == 0 && mission.status === 'pending'"
+                            @click="refuseMission">
+                            Refuser
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button @click="chooseTempMission">Test</button>
     </div>
 </template>
 
@@ -90,7 +122,7 @@ export default {
         this.chooseMission();
     },
     computed: {
-        ...mapState(['agents', 'mission']),
+        ...mapState(['agents', 'missionsCurrent', 'mission']),
         statusLabelComputed() {
             let statusLabelData;
             switch (this.mission.status) {
@@ -109,7 +141,7 @@ export default {
     },
     methods: {
         ...mapMutations(['SET_ASSIGN_AGENT']),
-        ...mapActions(['resolveMission', 'chooseMission']),
+        ...mapActions(['resolveMission', 'chooseMission', 'chooseTempMission', 'refuseMission']),
         assignAgent(agentId) {
             if (!this.mission.assignedAgentId) {
                 this.SET_ASSIGN_AGENT(agentId)
@@ -130,7 +162,6 @@ export default {
             const agent = this.agents.find(a => a.id === id);
             return agent.radio;
         }
-
     }
 }
 </script>
@@ -185,17 +216,45 @@ export default {
     justify-content: space-around;
 }
 
-.list{
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
+.justify-content-space-between {
+    justify-content: space-between;
 }
-.list-car{
-  background: url('../assets/police-car-patroling.svg') no-repeat left top;
-  height: 34px;
-  padding-top: 7px;
-  padding-left: 48px;
-  padding-right: 5px;
+
+.grid-container-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 colonnes */
+    gap: 10px;
+    /* espace entre les divs */
+}
+
+.grid-container-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 3 colonnes */
+    gap: 10px;
+    /* espace entre les divs */
+}
+
+.grid-item {
+    background-color: lightblue;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.list-car {
+    background: url('../assets/police-car-patroling.svg') no-repeat left top;
+    height: 34px;
+    padding-top: 7px;
+    padding-left: 48px;
+    padding-right: 5px;
 }
 
 h1,
@@ -207,12 +266,6 @@ h2 {
 
 .section {
     margin-bottom: 30px;
-}
-
-.agent-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
 }
 
 .agent-card,

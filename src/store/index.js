@@ -7,11 +7,15 @@ export default new Vuex.Store({
   state: {
     agents: [
       { id: 1, name: 'Dupont', level: 3, busy: false, radio: "Sierra 1", rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 2, name: 'Moreau', level: 2, busy: false, radio: "Oscar 1", rank: "Officer",  equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 2, name: 'Moreau', level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
       { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
     ],
     mission: Object,
-    missionList: [
+    missionsCurrent: [],
+    missionStore: [
       {
         id: 1,
         title: 'Cambriolage à la banque',
@@ -118,13 +122,31 @@ export default new Vuex.Store({
       state.mission.assignedAgentsId = []
     },
     SET_CHOSEN_MISSION(state, index) {
-      state.mission = state.missionList[index];
+      console.log("mutation: " + state.missionStore[index].title);
+      state.mission = state.missionStore[index];
+    },
+
+    SET_TEMP_CHOSEN_MISSION(state, index) {
+      console.log("mutation: " + state.missionStore[index].title);
+      state.missionsCurrent.push(state.missionStore[index]);
+    },
+    SET_REFUSE_MISSION(state, index) {
+      state.missionsCurrent.splice(index, 1);
     }
   },
   actions: {
+    refuseMission({ commit }, index) {
+      commit("SET_REFUSE_MISSION", index);
+    },
     chooseMission({ state, commit }) {
-      let index = Math.round(Math.random() * state.missionList.length);
+      let index = Math.round(Math.random() * state.missionStore.length);
+      console.log("index: " + index);
       commit("SET_CHOSEN_MISSION", index);
+    },
+    chooseTempMission({ state, commit }) {
+      let index = Math.round(Math.random() * state.missionStore.length);
+      console.log("index: " + index);
+      commit("SET_TEMP_CHOSEN_MISSION", index);
     },
     resolveMission({ state, commit, dispatch }) {
       this.patrolStatus = "🚓💨 En route"
@@ -132,15 +154,15 @@ export default new Vuex.Store({
       const assignedIds = state.mission.assignedAgentsId
       const assignedAgents = state.agents.filter(a => assignedIds.includes(a.id))
 
-      const totalForce = assignedAgents.reduce((sum, agent) => 
-        sum 
-      + agent.level 
-      + (agent.equipment.includes("handgun") ? 1 : 0) 
-      + (agent.equipment.includes("police-vest") ? 1 : 0) 
-      + (agent.equipment.includes("handcuffs") ? 1 : 0) 
-      + (agent.equipment.includes("taser") ? 1 : 0) 
-      + (agent.equipment.includes("nightstick") ? 1 : 0), 
-      0)
+      const totalForce = assignedAgents.reduce((sum, agent) =>
+        sum
+        + agent.level
+        + (agent.equipment.includes("handgun") ? 1 : 0)
+        + (agent.equipment.includes("police-vest") ? 1 : 0)
+        + (agent.equipment.includes("handcuffs") ? 1 : 0)
+        + (agent.equipment.includes("taser") ? 1 : 0)
+        + (agent.equipment.includes("nightstick") ? 1 : 0),
+        0)
       console.log("totalForce: " + totalForce);
 
       const chance = dispatch("estimateSuccessProbability", {
@@ -156,9 +178,10 @@ export default new Vuex.Store({
     },
     estimateSuccessProbability(_, { totalForce, difficulty }) {
       const diff = totalForce - difficulty
-      if (diff >= 2) return 0.9
-      if (diff === 1) return 0.75
-      if (diff === 0) return 0.5
+      if (diff >= 4) return 0.7
+      if (diff === 2) return 0.6
+      if (diff === 1) return 0.5
+      if (diff === 0) return 0.4
       if (diff === -1) return 0.3
       if (diff === -2) return 0.15
       return 0.05
