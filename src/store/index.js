@@ -10,6 +10,7 @@ export default new Vuex.Store({
       { id: 2, name: 'Moreau', level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
       { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] }
     ],
+    lastMissionTitle: String,
     missionsCurrent: [],
     missionStore: [
       {
@@ -121,6 +122,7 @@ export default new Vuex.Store({
     },
     SET_CHOSEN_MISSION(state, index) {
       console.log("mutation: " + state.missionStore[index].title);
+      state.lastMissionTitle = state.missionStore[index].title;
       state.missionsCurrent.push(state.missionStore[index]);
     },
     SET_REFUSE_MISSION(state, index) {

@@ -2,6 +2,30 @@ body {
     background-color: #1e2a38;
     display: flex;
     justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.radio {
+    background-color: gray;
+}
+
+.success {
+    background-color: #2ecc71;
+}
+
+.error {
+    background-color: #e74c3c;
 }
 
 .ml-5 {
@@ -77,8 +101,16 @@ body {
     justify-content: space-around;
 }
 
+.justify-content-center {
+    justify-content: center;
+}
+
 .justify-content-space-between {
     justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
 }
 
 .grid-container-2 {
@@ -128,6 +160,14 @@ body {
 
 .text-left {
     text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-black {
+    color: black;
 }
 
 h1,
@@ -196,4 +236,17 @@ button:hover {
 
 .button-red:hover {
     background-color: darkred;
+}
+
+nav {
+    padding: 30px;
+}
+
+nav a {
+    font-weight: bold;
+    color: white;
+}
+
+nav a.router-link-exact-active {
+    color: #42b983;
 }

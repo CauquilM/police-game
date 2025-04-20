@@ -4,10 +4,12 @@
         <div class="section agents">
             <h2>👮 Agents disponibles</h2>
             <div v-if="agents.length > 3" class="grid-container-4">
-                <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id" :agent="agent" :class="{ busy: agent.busy }"/>
+                <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id" :agent="agent"
+                    :class="{ busy: agent.busy }" />
             </div>
             <div v-else class="grid-container-3">
-                <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id" :agent="agent" :class="{ busy: agent.busy }"/>
+                <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id" :agent="agent"
+                    :class="{ busy: agent.busy }" />
             </div>
         </div>
         <div class="section mission">
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import AgentComponent from '../components/AgentComponent'
 import MissionComponent from '../components/MissionComponent'
 
@@ -32,19 +34,13 @@ export default {
         AgentComponent
     },
     data() {
-        return {
-
-        }
-    },
-    created() {
-        this.chooseMission();
+        return {}
     },
     computed: {
         ...mapState(['agents', 'missionsCurrent']),
     },
     methods: {
         ...mapMutations(['SET_ASSIGN_AGENT']),
-        ...mapActions(['chooseMission']),
         assignAgent(agentId) {
             if (!this.mission.assignedAgentId) {
                 this.SET_ASSIGN_AGENT(agentId)
