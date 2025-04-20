@@ -30,6 +30,7 @@ export default {
   },
   created() {
     this.chooseMission(); // mission initiale
+    this.chooseMission(); // mission initiale
     // this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
     // this.missionInterval = setInterval(() => {
     //   this.chooseMission();

@@ -4,12 +4,12 @@
         <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
         <div class="grid-container-2">
             <div class="grid-items" v-for="(agent) in agents" :key="agent.id">
-                <div v-if="agent.busy" class="agent-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
+                <button v-if="agent.busy" :disabled="patrolStatus !== ''" class="agent-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
                     {{ agent.radio }}
-                </div>
-                <div v-else class="agent-not-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
+                </button>
+                <button v-else class="agent-not-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
                     {{ agent.radio }}
-                </div>
+                </button>
             </div>
         </div>
         <div v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'">
@@ -20,8 +20,9 @@
                 </li>
             </ul>
         </div>
+        <p v-if="patrolStatus !== ''">ETA: {{ patrolStatus }}</p>
         <div class="d-flex justify-content-space-around">
-            <button class="button-green" v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending'"
+            <button class="button-green" v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending' && patrolStatus === ''"
                 @click="resolve(mission.id)">
                 Accepter
             </button>
@@ -72,9 +73,12 @@ export default {
             this.SET_ASSIGN_AGENT({ agentId, missionId });
         },
         resolve(missionId) {
-            this.patrolStatus = "🚓💨 En route"
-            setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "1000"); // 1000 ms = 1 seconde
-            setTimeout(() => { this.resolveMission(missionId) }, "2000"); // 1000 ms = 1 seconde
+            this.patrolStatus = "🚓💨 En route";
+            setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "10000"); // 1000 ms = 1 seconde
+            setTimeout(() => { 
+                this.resolveMission(missionId);
+                this.patrolStatus = '';
+            }, "20000"); // 1000 ms = 1 seconde
 
         },
         getAgentName(id) {
