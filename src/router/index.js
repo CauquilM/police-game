@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
 import InvestigationsView from '../views/InvestigationsView.vue'
+import InvestigationsDetailsComponent from '../views/InvestigationsDetailsComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,12 @@ const routes = [
     path: '/investigations',
     name: 'investigations',
     component: InvestigationsView
+  },
+  {
+    path: '/investigations-details/',
+    name: 'InvestigationsDetailsComponent',
+    component: InvestigationsDetailsComponent,
+    props: true
   }
 ]
 
