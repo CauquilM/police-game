@@ -1,0 +1,163 @@
+body {
+    background-color: #1e2a38;
+    display: flex;
+    justify-content: center;
+}
+
+.ml-5 {
+    margin-left: 5px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.dashboard {
+    background-color: #1e2a38;
+    color: #fff;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.equipment-bag {
+    display: flex;
+    margin-top: 20px;
+}
+
+.equipment {
+    width: 30px;
+    margin: auto;
+}
+
+.w-30 {
+    width: 30px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-flex-start {
+    justify-content: flex-start;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
+.justify-content-space-around {
+    justify-content: space-around;
+}
+
+.justify-content-space-between {
+    justify-content: space-between;
+}
+
+.grid-container-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 colonnes */
+    gap: 10px;
+    /* espace entre les divs */
+}
+
+.grid-container-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 3 colonnes */
+    gap: 10px;
+    /* espace entre les divs */
+}
+
+.grid-item {
+    background-color: lightblue;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.list-car {
+    background: url('../assets/police-car-patroling.svg') no-repeat left top;
+    height: 34px;
+    padding-top: 7px;
+    padding-left: 48px;
+    padding-right: 5px;
+}
+
+h1,
+h2 {
+    text-align: center;
+    color: whitesmoke;
+    margin-bottom: 10px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.agent-card,
+.mission-card {
+    background: #2e3b4e;
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.agent-card h3 {
+    margin: 0 0 5px;
+}
+
+.agent-card.busy {
+    opacity: 0.8;
+}
+
+.status {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+.rank {
+    color: gold;
+}
+
+button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: #00bcd4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0097a7;
+}
+
+.button-green {
+    background-color: green;
+}
+
+.button-green:hover {
+    background-color: darkgreen;
+}
+
+.button-red {
+    background-color: red;
+}
+
+.button-red:hover {
+    background-color: darkred;
+}

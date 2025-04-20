@@ -8,10 +8,7 @@ export default new Vuex.Store({
     agents: [
       { id: 1, name: 'Dupont', level: 3, busy: false, radio: "Sierra 1", rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
       { id: 2, name: 'Moreau', level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] }
     ],
     mission: Object,
     missionsCurrent: [],
@@ -123,11 +120,6 @@ export default new Vuex.Store({
     },
     SET_CHOSEN_MISSION(state, index) {
       console.log("mutation: " + state.missionStore[index].title);
-      state.mission = state.missionStore[index];
-    },
-
-    SET_TEMP_CHOSEN_MISSION(state, index) {
-      console.log("mutation: " + state.missionStore[index].title);
       state.missionsCurrent.push(state.missionStore[index]);
     },
     SET_REFUSE_MISSION(state, index) {
@@ -142,11 +134,6 @@ export default new Vuex.Store({
       let index = Math.round(Math.random() * state.missionStore.length);
       console.log("index: " + index);
       commit("SET_CHOSEN_MISSION", index);
-    },
-    chooseTempMission({ state, commit }) {
-      let index = Math.round(Math.random() * state.missionStore.length);
-      console.log("index: " + index);
-      commit("SET_TEMP_CHOSEN_MISSION", index);
     },
     resolveMission({ state, commit, dispatch }) {
       this.patrolStatus = "🚓💨 En route"
