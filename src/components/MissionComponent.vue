@@ -79,7 +79,7 @@ export default {
             setTimeout(() => { 
                 this.resolveMission(missionId);
                 this.patrolStatus = '';
-            }, "20000"); // 1000 ms = 1 seconde
+            }, "20000"); // 10000 ms = 10 seconde
 
         },
         getAgentName(id) {
