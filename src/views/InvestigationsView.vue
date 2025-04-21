@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Investigations Bureau</h1>
-        <div class="grid-container-3" >
+        <h1 class="mb-25">Investigations Bureau</h1>
+        <div class="grid-container-2">
             <div class="grid-item investigation-card" v-for="investigation in investigations" :key="investigation.id"
             :investigation="investigation" @click="openInvestigation(investigation)">
                 {{ investigation.titre }}

@@ -21,11 +21,11 @@
         visible: true
       }
     },
-    // mounted() {
-    //   setTimeout(() => {
-    //     this.visible = false
-    //   }, 3000) // Masque la notif après 3 secondes
-    // }
+    mounted() {
+      setTimeout(() => {
+        this.visible = false
+      }, 5000) // Masque la notif après 5 secondes
+    }
   }
   </script>
   

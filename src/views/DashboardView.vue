@@ -2,7 +2,7 @@
     <div class="dashboard">
         <h1>Commissariat Central</h1>
         <div class="section agents">
-            <h2>👮 Agents disponibles</h2>
+            <h2 class="mb-25">👮 Available units</h2>
             <div v-if="agents.length > 3" class="grid-container-4">
                 <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id" :agent="agent"
                     :class="{ busy: agent.busy }" />

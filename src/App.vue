@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <nav class="text-center">
-      <router-link to="/">Front Office</router-link> |
-      <router-link to="/investigations">Investigations Bureau</router-link>
+    <nav class="d-flex justify-content-space-around">
+      <router-link to="/" class="d-flex align-items-center"><img class="w-30 mr-5" src="./assets/police-car-patroling.svg" alt=""><p>Patrol</p></router-link>
+      <router-link to="/investigations" class="d-flex align-items-center"><img class="w-30 mr-5" src="./assets/detectives-badge.svg" alt=""><p>Investigations Bureau</p></router-link>
     </nav>
     <router-view/>
     <div>
@@ -30,12 +30,11 @@ export default {
   },
   created() {
     this.chooseMission(); // mission initiale
-    this.chooseMission(); // mission initiale
-    // this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
-    // this.missionInterval = setInterval(() => {
-    //   this.chooseMission();
-    //     this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
-    // }, 60000); // toutes les 15 secondes
+    this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
+    this.missionInterval = setInterval(() => {
+      this.chooseMission();
+        this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
+    }, 15000); // toutes les 15 secondes
   },
   beforeDestroy() {
     clearInterval(this.missionInterval);
@@ -50,10 +49,10 @@ export default {
       this.notification.message = message
       this.notification.type = type // info | success | error
 
-      // Supprime la notif après 3s (sinon elle reste dans le DOM)
+      // Supprime la notif après 6s (sinon elle reste dans le DOM)
       setTimeout(() => {
         this.notification.message = ''
-      }, 3000)
+      }, 6000)
     },
   }
 }

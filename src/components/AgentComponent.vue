@@ -12,13 +12,13 @@
         <div v-if="agent.busy" class="d-flex flex-direction-column">
             <div class="d-flex">
                 <img class="w-30" src="../assets/crime-scene.svg" alt="crime-scene">
-                <span class="ml-5">En mission</span>
+                <span class="ml-5">Busy</span>
             </div>
         </div>
         <div class="d-flex flex-direction-column" v-else>
             <div class="d-flex">
                 <img class="w-30" src="../assets/police-car-patroling.svg" alt="police-car-patroling">
-                <span class="ml-5">En patrouille</span>
+                <span class="ml-5">On patrol</span>
             </div>
         </div>
         <div class="equipment-bag">

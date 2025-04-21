@@ -1,6 +1,7 @@
 <template>
     <div>
         <h3>{{ mission.title }}</h3>
+        <p>Difficulty: {{ mission.difficulty }}</p>
         <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
         <div class="grid-container-2">
             <div class="grid-items" v-for="(agent) in agents" :key="agent.id">
@@ -24,11 +25,11 @@
         <div class="d-flex justify-content-space-around">
             <button class="button-green" v-if="mission.assignedAgentsId.length > 0 && mission.status === 'pending' && patrolStatus === ''"
                 @click="resolve(mission.id)">
-                Accepter
+                Accept
             </button>
             <button class="button-red" v-if="mission.assignedAgentsId.length == 0 && mission.status === 'pending'"
                 @click="refuseMission">
-                Refuser
+                Refuse
             </button>
         </div>
     </div>

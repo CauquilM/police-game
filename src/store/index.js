@@ -235,10 +235,13 @@ export default new Vuex.Store({
       const agent = state.agents.find(a => a.id === agentId)
       const indexMission = state.missionsCurrent.findIndex(m => m.id === missionId);
       const mission = state.missionsCurrent[indexMission];
-      if (agent && !mission.assignedAgentsId.includes(agentId)) {
+      if (agent && !agent.busy && !mission.assignedAgentsId.includes(agentId)) {
         console.log("enter");
         agent.busy = true
         mission.assignedAgentsId.push(agentId)
+      }
+      else if (agent && agent.busy && !mission.assignedAgentsId.includes(agentId)) {
+        return;
       }
       else {
         agent.busy = false;

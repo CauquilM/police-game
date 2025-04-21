@@ -6,11 +6,11 @@ body {
 }
 
 .investigation-card {
-    padding: 20px;
+    padding: 26px !important;
     background: #f0f0f0;
     border-radius: 12px;
-    max-width: 600px;
     margin: auto;
+    width: 80%;
 }
 
 .notification {
@@ -25,7 +25,7 @@ body {
 }
 
 .radio {
-    background-color: gray;
+    background-color: red;
 }
 
 .success {
@@ -46,6 +46,18 @@ body {
 
 .mb-5 {
     margin-bottom: 5px;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.mb-25 {
+    margin-bottom: 25px;
+}
+
+.mt-10 {
+    margin-top: 10px;
 }
 
 .dashboard {
@@ -254,6 +266,7 @@ nav {
 nav a {
     font-weight: bold;
     color: white;
+    text-decoration: none;
 }
 
 nav a.router-link-exact-active {
