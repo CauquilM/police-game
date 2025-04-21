@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1 class="mb-25">Investigations Bureau</h1>
-        <div class="grid-container-2">
-            <div class="grid-item investigation-card" v-for="investigation in investigations" :key="investigation.id"
+        <div :class="screenWidth > 500 ? 'grid-container-2' : 'd-flex flex-direction-column align-items-center mb-15'">
+            <div :class="screenWidth > 500 ? 'investigation-card grid-item' : 'investigation-card grid-item mb-15'" v-for="investigation in investigations" :key="investigation.id"
             :investigation="investigation" @click="openInvestigation(investigation)">
                 {{ investigation.titre }}
             </div>

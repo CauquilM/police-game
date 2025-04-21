@@ -228,9 +228,13 @@ export default new Vuex.Store({
       coupable: 'Sophie'
     }
 
-    ]
+    ],
+    screenWidth: document.documentElement.clientWidth
   },
   mutations: {
+    SET_SCREEN_WIDTH(state, width) {
+      state.screenWidth = width;
+    },
     SET_ASSIGN_AGENT(state, { agentId: agentId, missionId: missionId }) {
       const agent = state.agents.find(a => a.id === agentId)
       const indexMission = state.missionsCurrent.findIndex(m => m.id === missionId);
@@ -271,6 +275,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    updateScreenWidth({ commit }) {
+      commit('SET_SCREEN_WIDTH', document.documentElement.clientWidth);
+    },
     refuseMission({ commit }, index) {
       commit("SET_REFUSE_MISSION", index);
     },
@@ -321,5 +328,8 @@ export default new Vuex.Store({
       if (diff === -2) return 0.15
       return 0.05
     }
+  },
+  getters: {
+    screenWidth: state => state.screenWidth
   }
 })
