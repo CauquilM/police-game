@@ -1,12 +1,19 @@
 <template>
   <div id="app">
     <nav class="d-flex justify-content-space-around">
-      <router-link to="/" class="d-flex align-items-center"><img class="w-30 mr-5" src="./assets/police-car-patroling.svg" alt=""><p>Patrol</p></router-link>
-      <router-link to="/investigations" class="d-flex align-items-center"><img class="w-30 mr-5" src="./assets/detectives-badge.svg" alt=""><p>Investigations Bureau</p></router-link>
+      <router-link to="/" class="d-flex align-items-center"><img class="w-30 mr-5"
+          src="./assets/police-car-patroling.svg" alt="">
+        <p>Patrol</p>
+      </router-link>
+      <router-link to="/investigations" class="d-flex align-items-center"><img class="w-30 mr-5"
+          src="./assets/detectives-badge.svg" alt="">
+        <p>Investigations Bureau</p>
+      </router-link>
     </nav>
-    <router-view/>
+    <router-view />
     <div>
-      <NotificationComponent v-if="notification.message" :title="notification.title" :message="notification.message" :type="notification.type" />
+      <NotificationComponent v-if="notification.message" :title="notification.title" :message="notification.message"
+        :type="notification.type" />
     </div>
   </div>
 </template>
@@ -29,12 +36,10 @@ export default {
     }
   },
   created() {
-    this.chooseMission(); // mission initiale
-    this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
     this.missionInterval = setInterval(() => {
       this.chooseMission();
-        this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
-    }, 15000); // toutes les 15 secondes
+      this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
+    }, 60000); // toutes les 60 secondes
   },
   beforeDestroy() {
     clearInterval(this.missionInterval);

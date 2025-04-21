@@ -9,17 +9,21 @@
             <img class="w-30" src="../assets/police-radio.svg" alt="police-radio">
             <span class="ml-5">{{ agent.radio }}</span>
         </h3>
-        <div v-if="agent.busy" class="d-flex flex-direction-column">
-            <div class="d-flex">
-                <img class="w-30" src="../assets/crime-scene.svg" alt="crime-scene">
-                <span class="ml-5">Busy</span>
-            </div>
+        <div v-if="agent.health > 50" class="d-flex align-items-center">
+            <img @click="healAgent(agent.id)" class="w-30" src="../assets/health.svg" alt="health">
+            <span class="ml-5">Good {{ agent.health }}</span>
         </div>
-        <div class="d-flex flex-direction-column" v-else>
-            <div class="d-flex">
-                <img class="w-30" src="../assets/police-car-patroling.svg" alt="police-car-patroling">
-                <span class="ml-5">On patrol</span>
-            </div>
+        <div v-else class="d-flex align-items-center">
+            <img @click="healAgent(agent.id)" class="w-30" src="../assets/health.svg" alt="health">
+            <span class="ml-5">Bad {{ agent.health }}</span>
+        </div>
+        <div v-if="agent.busy" class="d-flex align-items-center">
+            <img class="w-30" src="../assets/crime-scene.svg" alt="crime-scene">
+            <span class="ml-5">Busy</span>
+        </div>
+        <div class="d-flex align-items-center" v-else>
+            <img class="w-30" src="../assets/police-car-patroling.svg" alt="police-car-patroling">
+            <span class="ml-5">On patrol</span>
         </div>
         <div class="equipment-bag">
             <img v-if="agent.equipment.includes('handcuffs')" class="equipment" src="../assets/handcuffs.svg"
@@ -35,10 +39,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: "AgentComponent",
     props: {
         agent: Object
+    },
+    methods: {
+        ...mapActions(["healAgent"]),
     }
 }
 </script>
