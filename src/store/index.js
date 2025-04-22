@@ -679,8 +679,13 @@ export default new Vuex.Store({
 
     ],
     screenWidth: document.documentElement.clientWidth
+    ],
+    screenWidth: document.documentElement.clientWidth
   },
   mutations: {
+    SET_SCREEN_WIDTH(state, width) {
+      state.screenWidth = width;
+    },
     SET_SCREEN_WIDTH(state, width) {
       state.screenWidth = width;
     },
