@@ -540,142 +540,419 @@ export default new Vuex.Store({
         "status": "pending"
       }
     ],
-    investigations: [{
-      id: 0,
-      titre: 'Enquête : Cambriolage de nuit',
-      description: 'Une effraction a été signalée cette nuit. Que voulez-vous examiner ?',
-      indices: {
-        vitre: {
-          label: 'Vitre brisée',
-          description: '🪟 Vitre : Brisée de l’extérieur à 2h.'
+    investigations: [
+      {
+        id: 0,
+        titre: 'Investigation: Nighttime Burglary',
+        description: 'A break-in was reported last night. What would you like to examine?',
+        indices: {
+          vitre: {
+            label: 'Broken window',
+            description: '🪟 Window: Broken from the outside at 2 AM.'
+          },
+          empreinte: {
+            label: 'Shoe print',
+            description: '👟 Print: Size 44, popular brand sneaker.'
+          },
+          temoin: {
+            label: 'Witness',
+            description: '👤 Witness: Person wearing a black hoodie.'
+          },
+          gant: {
+            label: 'Glove fiber',
+            description: '🧵 Fiber: Black wool glove fibers found on the window.'
+          },
+          sac: {
+            label: 'Dropped bag',
+            description: '🎒 Bag: Contains snack wrappers and a receipt dated last night.'
+          }
         },
-        empreinte: {
-          label: 'Empreinte de chaussure',
-          description: '👟 Empreinte : Taille 44, basket populaire.'
-        },
-        temoin: {
-          label: 'Témoin',
-          description: '👤 Témoin : Personne avec capuche noire.'
-        }
+        suspects: [
+          {
+            nom: 'Lucas',
+            description: 'Size 44, hoodie, has an alibi.'
+          },
+          {
+            nom: 'Yanis',
+            description: 'No alibi, size 42.'
+          },
+          {
+            nom: 'Samira',
+            description: 'Lives nearby, saw nothing.'
+          },
+          {
+            nom: 'Karim',
+            description: 'Friend of Lucas, wears black hoodie, was out late.'
+          },
+          {
+            nom: 'Inès',
+            description: 'Carries a similar bag, claims she lost it.'
+          }
+        ],
+        coupable: 'Yanis'
       },
-      suspects: [
-        {
-          nom: 'Lucas',
-          description: 'Taille 44, capuche, alibi'
+      {
+        id: 1,
+        titre: 'Investigation: Museum Theft',
+        description: 'A famous painting was stolen last night at the Museum of Fine Arts. Explore the clues to find the thief.',
+        indices: {
+          camera: {
+            label: 'Security camera',
+            description: '📹 Camera: Turned off at 3 AM.'
+          },
+          badge: {
+            label: 'Badge found on the floor',
+            description: '🪪 Badge: Belongs to a cleaning staff employee.'
+          },
+          empreinte: {
+            label: 'Fingerprint',
+            description: '🧤 Print: Gloves were worn, but a perfume trace was detected.'
+          },
+          alarme: {
+            label: 'Disabled alarm system',
+            description: '🔕 Alarm: Deactivated using an admin password.'
+          },
+          sol: {
+            label: 'Scuff mark on the floor',
+            description: '👞 Floor: Mark from high heels near the frame.'
+          }
         },
-        {
-          nom: 'Yanis',
-          description: 'Pas d’alibi, taille 42'
-        },
-        {
-          nom: 'Samira',
-          description: 'Vit à côté, n’a rien vu'
-        }
-      ],
-      coupable: 'Yanis'
-    },
-    {
-      id: 1,
-      titre: 'Enquête : Vol au musée',
-      description: 'Un tableau célèbre a été volé cette nuit au musée des Beaux-Arts. Explore les indices pour découvrir le voleur.',
-      indices: {
-        camera: {
-          label: 'Caméra de surveillance',
-          description: '📹 Caméra : Coupée à 3h du matin.'
-        },
-        badge: {
-          label: 'Badge trouvé au sol',
-          description: '🪪 Badge : Appartient à un employé du service de nettoyage.'
-        },
-        empreinte: {
-          label: 'Empreinte digitale',
-          description: '🧤 Empreinte : Gants portés, mais trace de parfum.'
-        }
+        suspects: [
+          {
+            nom: 'Claire',
+            description: 'Security guard, on break at 3 AM.'
+          },
+          {
+            nom: 'Michel',
+            description: 'Cleaner, lost his badge yesterday.'
+          },
+          {
+            nom: 'Leila',
+            description: 'Art restorer, wears strong perfume.'
+          },
+          {
+            nom: 'Sylvain',
+            description: 'IT staff, has alarm access.'
+          },
+          {
+            nom: 'Nadia',
+            description: 'Tour guide, wears heels and perfume.'
+          }
+        ],
+        coupable: 'Leila'
       },
-      suspects: [
-        {
-          nom: 'Claire',
-          description: 'Agent de sécurité, était en pause à 3h.'
+      {
+        id: 2,
+        titre: 'Investigation: Arson',
+        description: 'A fire broke out in an abandoned house. Firefighters suspect criminal activity.',
+        indices: {
+          briquet: {
+            label: 'Lighter found',
+            description: '🔥 Lighter: Engraved with the initials "J.T."'
+          },
+          voisin: {
+            label: 'Neighbor’s testimony',
+            description: '👀 Neighbor: Saw a figure wearing a red hoodie.'
+          },
+          historique: {
+            label: 'Phone history',
+            description: '📱 Phone: Search for "how to start a fire".'
+          },
+          essence: {
+            label: 'Fuel traces',
+            description: '🛢️ Fuel: Smell of gasoline near the origin point.'
+          },
+          chaussures: {
+            label: 'Burned shoe print',
+            description: '👣 Print: Partially melted print, size 45.'
+          }
         },
-        {
-          nom: 'Michel',
-          description: 'Nettoyeur, a perdu son badge hier.'
-        },
-        {
-          nom: 'Leila',
-          description: 'Restauratrice d’art, porte un parfum fort.'
-        }
-      ],
-      coupable: 'Leila'
-    },
-    {
-      id: 2,
-      titre: 'Enquête : Incendie volontaire',
-      description: 'Un incendie s’est déclaré dans une maison abandonnée. Les pompiers soupçonnent un acte criminel.',
-      indices: {
-        briquet: {
-          label: 'Briquet retrouvé',
-          description: '🔥 Briquet : Gravé aux initiales "J.T."'
-        },
-        voisin: {
-          label: 'Témoignage du voisin',
-          description: '👀 Voisin : A vu une silhouette avec une capuche rouge.'
-        },
-        historique: {
-          label: 'Historique du téléphone',
-          description: '📱 Téléphone : Recherche sur "comment faire un incendie".'
-        }
+        suspects: [
+          {
+            nom: 'Julien',
+            description: 'Red hoodie, initials J.T.'
+          },
+          {
+            nom: 'Thomas',
+            description: 'Fire enthusiast, blue hoodie.'
+          },
+          {
+            nom: 'Emma',
+            description: 'Was just passing through the neighborhood.'
+          },
+          {
+            nom: 'Jade',
+            description: 'Owns a red hoodie, size 45 shoes.'
+          },
+          {
+            nom: 'Olivier',
+            description: 'Works at gas station near scene.'
+          }
+        ],
+        coupable: 'Julien'
       },
-      suspects: [
-        {
-          nom: 'Julien',
-          description: 'Capuche rouge, initiales J.T.'
+      {
+        id: 3,
+        titre: 'Investigation: Missing Bicycle',
+        description: 'A very expensive racing bike disappeared from the bike storage. It’s up to you to solve this mystery!',
+        indices: {
+          cadenas: {
+            label: 'Cut lock',
+            description: '🔓 Lock: Cleanly cut with pliers.'
+          },
+          empreinte: {
+            label: 'Tire print',
+            description: '🚴‍♂️ Tire: Smooth, competition-grade, rare model.'
+          },
+          alarme: {
+            label: 'Triggered alarm',
+            description: '🚨 Alarm: Went off at 5:15 AM, then silence.'
+          },
+          clef: {
+            label: 'Spare key found',
+            description: '🗝️ Key: Found behind a loose tile.'
+          },
+          vidéo: {
+            label: 'Hallway video',
+            description: '📼 Video: Someone with a helmet and gloves entered at 5:10 AM.'
+          }
         },
-        {
-          nom: 'Thomas',
-          description: 'Amateur de feu, capuche bleue'
-        },
-        {
-          nom: 'Emma',
-          description: 'Passait dans le quartier par hasard'
-        }
-      ],
-      coupable: 'Julien'
-    },
-    {
-      id: 3,
-      titre: 'Enquête : Vélo disparu',
-      description: 'Un vélo de course très cher a disparu du local à vélos. À vous de résoudre ce mystère !',
-      indices: {
-        cadenas: {
-          label: 'Cadenas coupé',
-          description: '🔓 Cadenas : Coupé proprement avec une pince.'
-        },
-        empreinte: {
-          label: 'Empreinte de pneu',
-          description: '🚴‍♂️ Pneu : Pneu lisse, compétition, modèle rare.'
-        },
-        alarme: {
-          label: 'Alarme déclenchée',
-          description: '🚨 Alarme : Signal activé à 5h15, puis silence.'
-        }
+        suspects: [
+          {
+            nom: 'Nico',
+            description: 'Amateur cyclist, owns pliers.'
+          },
+          {
+            nom: 'Sophie',
+            description: 'Former owner of the bike, knows the storage room.'
+          },
+          {
+            nom: 'Ali',
+            description: 'Works in the building, present at 5:15 AM.'
+          },
+          {
+            nom: 'Bruno',
+            description: 'Had access to spare keys.'
+          },
+          {
+            nom: 'Lina',
+            description: 'Competes in races, has same tire brand.'
+          }
+        ],
+        coupable: 'Sophie'
       },
-      suspects: [
-        {
-          nom: 'Nico',
-          description: 'Cycliste amateur, possède des pinces'
+      {
+        id: 4,
+        titre: 'Enquête : Vol à la bibliothèque',
+        description: 'Un manuscrit ancien a disparu de la bibliothèque municipale.',
+        indices: {
+          porte: {
+            label: 'Porte arrière',
+            description: '🚪 Porte : Forcée sans déclencher l’alarme.'
+          },
+          carnet: {
+            label: 'Carnet trouvé',
+            description: '📓 Carnet : Notes sur les manuscrits rares.'
+          },
+          empreinte: {
+            label: 'Empreinte digitale',
+            description: '🧤 Empreinte : Partiellement effacée.'
+          },
+          trace: {
+            label: 'Trace de pas',
+            description: '👣 Trace : Talon usé typique d’un bibliothécaire.'
+          }
         },
-        {
-          nom: 'Sophie',
-          description: 'Ex-propriétaire du vélo, connaît le local'
+        suspects: [
+          { nom: 'Agathe', description: 'Étudiante en histoire, fan de manuscrits' },
+          { nom: 'Bruno', description: 'Bibliothécaire, a oublié de fermer une porte récemment' },
+          { nom: 'Martine', description: 'Visite souvent, connaît bien les lieux' },
+          { nom: 'David', description: 'Conservateur, a un carnet similaire' }
+        ],
+        coupable: 'David'
+      },
+      {
+        id: 5,
+        titre: 'Enquête : Fraude au bureau',
+        description: 'Des fonds ont disparu mystérieusement de la comptabilité.',
+        indices: {
+          logiciel: {
+            label: 'Logiciel de gestion',
+            description: '💻 Logiciel : Connexion à 2h du matin via un VPN.'
+          },
+          motdepasse: {
+            label: 'Post-it retrouvé',
+            description: '📝 Mot de passe : Ecrit sur un post-it collé sous un clavier.'
+          },
+          caméra: {
+            label: 'Caméra de sécurité',
+            description: '📹 Caméra : Image floue d’une silhouette.'
+          },
+          facture: {
+            label: 'Facture modifiée',
+            description: '🧾 Facture : Retouchée après validation.'
+          }
         },
-        {
-          nom: 'Ali',
-          description: 'Travaille dans l’immeuble, présent à 5h15'
-        }
-      ],
-      coupable: 'Sophie'
-    }
+        suspects: [
+          { nom: 'Isabelle', description: 'Travaille la nuit, accès complet aux comptes' },
+          { nom: 'Kevin', description: 'Nouvel employé, passionné d’informatique' },
+          { nom: 'Louise', description: 'Assistante, écrit souvent ses mots de passe' },
+          { nom: 'Marc', description: 'Responsable, a repéré l’anomalie' }
+        ],
+        coupable: 'Isabelle'
+      },      
+      {
+        id: 6,
+        titre: 'Enquête : Empoisonnement au café',
+        description: 'Un employé a été victime d’un malaise après avoir bu un café.',
+        indices: {
+          tasse: {
+            label: 'Tasse analysée',
+            description: '☕ Tasse : Traces de somnifère.'
+          },
+          caméra: {
+            label: 'Caméra de la salle de pause',
+            description: '📹 Caméra : Quelqu’un a manipulé le plateau vers 10h.'
+          },
+          badge: {
+            label: 'Badge d’accès',
+            description: '🪪 Badge : Utilisation inhabituelle à 9h45.'
+          },
+          armoire: {
+            label: 'Armoire à pharmacie',
+            description: '🚪 Armoire : Manque une boîte de comprimés.'
+          }
+        },
+        suspects: [
+          { nom: 'Jules', description: 'Fatigué du bruit, a parlé de vengeance' },
+          { nom: 'Sandra', description: 'Toujours au courant de tout' },
+          { nom: 'Victor', description: 'A accès à l’armoire médicale' },
+          { nom: 'Clémence', description: 'Partage le bureau avec la victime' }
+        ],
+        coupable: 'Victor'
+      },
+      {
+        id: 7,
+        titre: 'Enquête : Sabotage au garage',
+        description: 'Un client a failli avoir un accident après une réparation.',
+        indices: {
+          boulons: {
+            label: 'Boulons desserrés',
+            description: '🔩 Boulons : Volontairement desserrés.'
+          },
+          outils: {
+            label: 'Outils déplacés',
+            description: '🛠️ Outils : Un jeu d’outils manquant.'
+          },
+          planning: {
+            label: 'Planning de réparation',
+            description: '📅 Planning : Modifié à la main.'
+          },
+          audio: {
+            label: 'Enregistrement audio',
+            description: '🎙️ Audio : On entend "faut qu’il paye".'
+          }
+        },
+        suspects: [
+          { nom: 'Luc', description: 'A eu un conflit avec le client' },
+          { nom: 'Dina', description: 'Mécontente de son salaire' },
+          { nom: 'Rachid', description: 'Chef d’atelier, très pointilleux' },
+          { nom: 'Nina', description: 'Nouvelle embauchée, formation incomplète' }
+        ],
+        coupable: 'Luc'
+      },
+      {
+        id: 8,
+        titre: 'Enquête : Disparition d’un animal rare',
+        description: 'Un singe rare a disparu du zoo pendant la nuit.',
+        indices: {
+          clôture: {
+            label: 'Clôture sectionnée',
+            description: '🔧 Clôture : Coupée avec des pinces spécifiques.'
+          },
+          véhicule: {
+            label: 'Trace de pneu',
+            description: '🚙 Pneu : Véhicule utilitaire stationné en dehors des heures.'
+          },
+          empreinte: {
+            label: 'Empreinte de gant',
+            description: '🧤 Gant : Utilisé pour éviter les morsures.'
+          },
+          fiche: {
+            label: 'Fiche d’enclos',
+            description: '📄 Fiche : Volée quelques jours avant.'
+          }
+        },
+        suspects: [
+          { nom: 'Laura', description: 'Ancienne soigneuse licenciée récemment' },
+          { nom: 'Kévin', description: 'Livreur, a accès au parking' },
+          { nom: 'Sarah', description: 'Militante animaliste' },
+          { nom: 'Étienne', description: 'Gardien, a oublié de fermer un portillon' }
+        ],
+        coupable: 'Laura'
+      },
+      {
+        id: 9,
+        titre: 'Enquête : Dossier volé au commissariat',
+        description: 'Un dossier confidentiel a disparu du commissariat.',
+        indices: {
+          tiroir: {
+            label: 'Tiroir forcé',
+            description: '🗄️ Tiroir : Crochetage discret.'
+          },
+          caméra: {
+            label: 'Caméra désactivée',
+            description: '📹 Caméra : Éteinte pendant 10 minutes.'
+          },
+          badge: {
+            label: 'Accès avec badge',
+            description: '🪪 Badge : Badge utilisé mais non reconnu.'
+          },
+          empreinte: {
+            label: 'Empreinte sur le clavier',
+            description: '🧤 Gants fins mais une empreinte partielle trouvée.'
+          }
+        },
+        suspects: [
+          { nom: 'Marc', description: 'Jeune stagiaire curieux' },
+          { nom: 'Léna', description: 'Lieutenant, en désaccord avec le chef' },
+          { nom: 'Yann', description: 'Ancien policier en conflit avec le service' },
+          { nom: 'Sophie', description: 'Chargée de l’archivage' }
+        ],
+        coupable: 'Léna'
+      },
+      {
+        id: 10,
+        titre: 'Enquête : Pollution du lac',
+        description: 'Des poissons morts ont été retrouvés dans le lac communal.',
+        indices: {
+          eau: {
+            label: 'Analyse de l’eau',
+            description: '💧 Eau : Taux élevé de produit chimique industriel.'
+          },
+          baril: {
+            label: 'Baril abandonné',
+            description: '🛢️ Baril : Marqué d’un logo d’entreprise.'
+          },
+          trace: {
+            label: 'Trace de pneus',
+            description: '🚛 Camion : Entrée illégale sur le site la nuit.'
+          },
+          photo: {
+            label: 'Photo satellite',
+            description: '📷 Satellite : Déchargement aperçu en pleine nuit.'
+          }
+        },
+        suspects: [
+          { nom: 'Entreprise X', description: 'A déjà eu des amendes pour pollution' },
+          { nom: 'Ferme locale', description: 'Utilise des engrais chimiques' },
+          { nom: 'Julien', description: 'Photographe amateur présent sur place' },
+          { nom: 'Patricia', description: 'Employée municipale, responsable environnement' }
+        ],
+        coupable: 'Entreprise X'
+      },
+                                    
+
 
     ],
     screenWidth: document.documentElement.clientWidth,
@@ -732,7 +1009,7 @@ export default new Vuex.Store({
       if (agent) {
         agent.isInHospital = true;
       }
-    },    
+    },
     SHOW_NOTIFICATION(state, payload) {
       // On donne un id unique à chaque notification
       const id = Date.now() + Math.random();
@@ -753,9 +1030,9 @@ export default new Vuex.Store({
     healAgent({ state, commit, dispatch }, agentId) {
       const agent = state.agents.find(a => a.id === agentId);
       if (!agent) return;
-    
+
       commit("SET_HEAL_AGENT", agentId);
-    
+
       setTimeout(() => {
         agent.health = 100;
         agent.isInHospital = false;
