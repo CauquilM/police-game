@@ -13,8 +13,17 @@ body {
     width: 80%;
 }
 
-.notification {
+.notification-wrapper {
     position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
+}
+
+.notification {
     top: 20px;
     right: 20px;
     padding: 12px 20px;
@@ -51,6 +60,7 @@ body {
 .mb-15 {
     margin-bottom: 15px;
 }
+
 .mb-10 {
     margin-bottom: 10px;
 }
@@ -92,7 +102,8 @@ body {
     font-size: 0.9em;
 }
 
-.agent-selected, .agent-not-selected {
+.agent-selected,
+.agent-not-selected {
     width: 80%;
 }
 
@@ -274,7 +285,7 @@ nav {
     nav {
         padding: 30px 0;
     }
-  }
+}
 
 nav a {
     font-weight: bold;

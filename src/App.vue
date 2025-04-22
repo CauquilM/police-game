@@ -12,8 +12,7 @@
     </nav>
     <router-view />
     <div>
-      <NotificationComponent v-if="notification.message" :title="notification.title" :message="notification.message"
-        :type="notification.type" />
+      <NotificationComponent />
     </div>
   </div>
 </template>
@@ -38,7 +37,11 @@ export default {
   created() {
     this.missionInterval = setInterval(() => {
       this.chooseMission();
-      this.showNotification("A new radio call ", this.lastMissionTitle, "radio")
+      this.notify({
+        title: "A new radio call",
+        message: this.lastMissionTitle,
+        type: "radio"
+      })
     }, 60000); // toutes les 60 secondes
   },
   beforeDestroy() {
@@ -48,17 +51,7 @@ export default {
     ...mapState(["lastMissionTitle"]),
   },
   methods: {
-    ...mapActions(['chooseMission']),
-    showNotification(title, message, type) {
-      this.notification.title = title
-      this.notification.message = message
-      this.notification.type = type // info | success | error
-
-      // Supprime la notif après 6s (sinon elle reste dans le DOM)
-      setTimeout(() => {
-        this.notification.message = ''
-      }, 6000)
-    },
+    ...mapActions(['chooseMission', 'notify']),
   }
 }
 </script>

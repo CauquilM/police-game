@@ -11,13 +11,17 @@
         </h3>
         <div v-if="agent.health > 50" class="d-flex align-items-center">
             <img @click="healAgent(agent.id)" class="w-30" src="../assets/health.svg" alt="health">
-            <span class="ml-5">Good {{ agent.health }}</span>
+            <span class="ml-5">Good {{ agent.id }}</span>
         </div>
         <div v-else class="d-flex align-items-center">
             <img @click="healAgent(agent.id)" class="w-30" src="../assets/health.svg" alt="health">
-            <span class="ml-5">Bad {{ agent.health }}</span>
+            <span class="ml-5">Bad {{ agent.id }}</span>
         </div>
-        <div v-if="agent.busy" class="d-flex align-items-center">
+        <div v-if="agent.isInHospital" class="d-flex align-items-center">
+            <img class="w-30" src="../assets/hospital.svg" alt="hospital">
+            <span class="ml-5">In hospital</span>
+        </div>
+        <div v-else-if="agent.busy" class="d-flex align-items-center">
             <img class="w-30" src="../assets/crime-scene.svg" alt="crime-scene">
             <span class="ml-5">Busy</span>
         </div>

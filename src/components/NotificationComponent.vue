@@ -1,31 +1,27 @@
 <template>
-    <div v-if="visible" class="notification" :class="type">
-      <h3 v-if="type == 'radio'" class="d-flex radio align-items-center"><span><img class="w-30" src="../assets/police-radio.svg"></span>{{ title }}</h3>
-      <p>{{ message }}</p>
+  <div class="notification-wrapper">
+    <div v-for="n in notifications" :key="n.id" class="notification" :class="n.type">
+      <h3 v-if="n.type === 'radio'" class="d-flex radio align-items-center">
+        <span><img class="w-30" src="../assets/police-radio.svg" /></span>{{ n.title }}
+      </h3>
+      <h3 v-else-if="n.type === 'success'" class="d-flex radio align-items-center">
+        <span><img class="w-30" src="../assets/police-radio.svg" /></span>{{ n.title }}
+      </h3>
+      <h3 v-else class="d-flex radio align-items-center">
+        <span><img class="w-30" src="../assets/police-radio.svg" /></span>{{ n.title }}
+      </h3>
+      <p>{{ n.message }}</p>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'NotificationComponent',
-    props: {
-      title: String,
-      message: String,
-      type: {
-        type: String,
-        default: 'info' // info | success | error
-      }
-    },
-    data() {
-      return {
-        visible: true
-      }
-    },
-    mounted() {
-      setTimeout(() => {
-        this.visible = false
-      }, 5000) // Masque la notif après 5 secondes
-    }
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  name: 'NotificationComponent',
+  computed: {
+    ...mapState(['notifications'])
   }
-  </script>
-  
+}
+</script>

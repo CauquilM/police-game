@@ -5,7 +5,7 @@
         <p>Status : <strong>{{ statusLabelComputed }}</strong></p>
         <div class="grid-container-2">
             <div class="grid-items" v-for="(agent) in agents" :key="agent.id">
-                <button v-if="agent.busy" :disabled="patrolStatus !== ''" class="agent-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
+                <button v-if="agent.busy || agent.isInHospital" :disabled="patrolStatus !== '' || agent.isInHospital" class="agent-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">
                     {{ agent.radio }}
                 </button>
                 <button v-else class="agent-not-selected" @click="assignAgent({ agentId: agent.id, missionId: mission.id })">

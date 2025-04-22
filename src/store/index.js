@@ -6,9 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     agents: [
-      { id: 1, name: 'Dupont', health: 50, level: 3, busy: false, radio: "Sierra 1", rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 2, name: 'Moreau', health: 100, level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', health: 100, level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] }
+      { id: 1, name: 'Dupont', health: 50, isInHospital: false, level: 3, busy: false, radio: "Sierra 1", rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 2, name: 'Moreau', health: 100, isInHospital: false, level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
+      { id: 3, name: 'Nguyen', health: 100, isInHospital: false, level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] }
     ],
     lastMissionTitle: String,
     missionsCurrent: [],
@@ -678,14 +678,10 @@ export default new Vuex.Store({
     }
 
     ],
-    screenWidth: document.documentElement.clientWidth
-    ],
-    screenWidth: document.documentElement.clientWidth
+    screenWidth: document.documentElement.clientWidth,
+    notifications: []
   },
   mutations: {
-    SET_SCREEN_WIDTH(state, width) {
-      state.screenWidth = width;
-    },
     SET_SCREEN_WIDTH(state, width) {
       state.screenWidth = width;
     },
@@ -733,13 +729,42 @@ export default new Vuex.Store({
     },
     SET_HEAL_AGENT(state, agentId) {
       const agent = state.agents.find(a => a.id === agentId);
-      agent.health = 100;
+      if (agent) {
+        agent.isInHospital = true;
+      }
+    },    
+    SHOW_NOTIFICATION(state, payload) {
+      // On donne un id unique à chaque notification
+      const id = Date.now() + Math.random();
+      state.notifications.unshift({ id, ...payload }); // ajoute en haut
+    },
+    HIDE_NOTIFICATION(state, id) {
+      state.notifications = state.notifications.filter(n => n.id !== id);
     }
   },
   actions: {
-    healAgent({ commit }, agentId) {
-      console.log("heal");
+    notify({ commit }, { title, message, type }) {
+      const id = Date.now() + Math.random();
+      commit('SHOW_NOTIFICATION', { id, title, message, type });
+      setTimeout(() => {
+        commit('HIDE_NOTIFICATION', id);
+      }, 4000);
+    },
+    healAgent({ state, commit, dispatch }, agentId) {
+      const agent = state.agents.find(a => a.id === agentId);
+      if (!agent) return;
+    
       commit("SET_HEAL_AGENT", agentId);
+    
+      setTimeout(() => {
+        agent.health = 100;
+        agent.isInHospital = false;
+        dispatch('notify', {
+          title: `Agent ${agent.name} recovered from hospital`,
+          message: '',
+          type: "success"
+        });
+      }, 30000);
     },
     updateScreenWidth({ commit }) {
       commit('SET_SCREEN_WIDTH', document.documentElement.clientWidth);
@@ -754,6 +779,46 @@ export default new Vuex.Store({
         commit("SET_CHOSEN_MISSION", index);
       }
     },
+    chancesOfInjured(_, { agent, mission }) {
+      let index;
+      console.log('injured mission: ' + mission);
+      console.log("enter injured");
+      switch (mission.difficulty) {
+        case 1:
+          index = Math.round(Math.random() * 10)
+          console.log('index: ' + index);
+          agent.health -= 10
+          break;
+
+        case 2:
+          index = Math.round(Math.random() * 20)
+          console.log('index: ' + index);
+          agent.health -= 20
+          break;
+
+        case 3:
+          index = Math.round(Math.random() * 30)
+          console.log('index: ' + index);
+          agent.health -= 30
+          break;
+
+        case 4:
+          index = Math.round(Math.random() * 40)
+          console.log('index: ' + index);
+          agent.health -= 40
+          break;
+
+        case mission.difficulty >= 5:
+          index = Math.round(Math.random() * 50)
+          console.log('index: ' + index);
+          agent.health -= 50
+          break;
+
+        default:
+          break;
+      }
+      console.log("agent injured: " + agent);
+    },
     resolveMission({ state, commit, dispatch }, missionId) {
       this.patrolStatus = "🚓💨 En route"
       setTimeout(() => { this.patrolStatus = "👮🚧 On scene" }, "10000"); // 1000 ms = 1 seconde
@@ -763,6 +828,10 @@ export default new Vuex.Store({
 
       const assignedIds = mission.assignedAgentsId
       const assignedAgents = state.agents.filter(a => assignedIds.includes(a.id))
+
+      assignedAgents.forEach((agent) => {
+        dispatch("chancesOfInjured", { agent, mission })
+      });
 
       const totalForce = assignedAgents.reduce((sum, agent) =>
         sum
@@ -798,6 +867,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    screenWidth: state => state.screenWidth
+    screenWidth: state => state.screenWidth,
+    notification: state => state.notification
   }
 })
