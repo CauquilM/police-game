@@ -47,6 +47,7 @@
                     class="mission-card grid-item mb-10" :mission="mission" />
             </div>
         </div>
+        <!-- <CarteVilleComponent/>  -->
     </div>
 </template>
 
@@ -54,12 +55,14 @@
 import { mapState, mapActions } from 'vuex'
 import AgentComponent from '../components/AgentComponent'
 import MissionComponent from '../components/MissionComponent'
+// import CarteVilleComponent from '../components/CarteVilleComponent'
 
 export default {
     name: "DashboardView",
     components: {
         MissionComponent,
-        AgentComponent
+        AgentComponent,
+        // CarteVilleComponent
     },
     data() {
         return {}

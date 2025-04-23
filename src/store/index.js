@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -5,11 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    agents: [
-      { id: 1, name: 'Dupont', health: 50, isInHospital: false, level: 3, busy: false, radio: "Sierra 1", rank: "Sergeant", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 2, name: 'Moreau', health: 100, isInHospital: false, level: 2, busy: false, radio: "Oscar 1", rank: "Officer", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] },
-      { id: 3, name: 'Nguyen', health: 100, isInHospital: false, level: 1, busy: false, radio: "India 1", rank: "Intern Officer ", equipment: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"] }
-    ],
+    agents: [],
     lastMissionTitle: String,
     missionsCurrent: [],
     missionStore: [
@@ -800,7 +797,7 @@ export default new Vuex.Store({
           { nom: 'Marc', description: 'Responsable, a repéré l’anomalie' }
         ],
         coupable: 'Isabelle'
-      },      
+      },
       {
         id: 6,
         titre: 'Enquête : Empoisonnement au café',
@@ -951,7 +948,7 @@ export default new Vuex.Store({
         ],
         coupable: 'Entreprise X'
       },
-                                    
+
 
 
     ],
@@ -1017,9 +1014,21 @@ export default new Vuex.Store({
     },
     HIDE_NOTIFICATION(state, id) {
       state.notifications = state.notifications.filter(n => n.id !== id);
+    },
+    SET_AGENTS(state, agentsApi) {
+      state.agents = agentsApi;
     }
   },
   actions: {
+    startApp({ dispatch }) {
+      dispatch("getAgentsFromApi");
+    },
+    getAgentsFromApi({ commit }) {
+      axios.get("http://localhost:3000/agents")
+        .then((res) => {
+          commit("SET_AGENTS", res.data)
+        })
+    },
     notify({ commit }, { title, message, type }) {
       const id = Date.now() + Math.random();
       commit('SHOW_NOTIFICATION', { id, title, message, type });

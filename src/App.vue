@@ -35,6 +35,7 @@ export default {
     }
   },
   created() {
+    this.startApp();
     this.missionInterval = setInterval(() => {
       this.chooseMission();
       this.notify({
@@ -51,7 +52,7 @@ export default {
     ...mapState(["lastMissionTitle"]),
   },
   methods: {
-    ...mapActions(['chooseMission', 'notify']),
+    ...mapActions(['startApp','chooseMission', 'notify']),
   }
 }
 </script>
