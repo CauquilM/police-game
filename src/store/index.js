@@ -1043,7 +1043,15 @@ export default new Vuex.Store({
       commit("SET_HEAL_AGENT", agentId);
 
       setTimeout(() => {
-        agent.health = 100;
+        axios.put("http://localhost:3000/agents/healAgent",
+          { id: agent.id }
+        )
+        .then((res) => {
+          console.log("heal: " + res.data);
+        })
+        .catch((err) => {
+          console.log("heal: " + err);
+        })
         agent.isInHospital = false;
         dispatch('notify', {
           title: `Agent ${agent.name} recovered from hospital`,
