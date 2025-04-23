@@ -36,23 +36,23 @@ export default {
   },
   created() {
     this.startApp();
-    this.missionInterval = setInterval(() => {
-      this.chooseMission();
+    this.interventionsInterval = setInterval(() => {
+      this.chooseInterventions();
       this.notify({
         title: "A new radio call",
-        message: this.lastMissionTitle,
+        message: this.lastInterventionsTitle,
         type: "radio"
       })
     }, 60000); // toutes les 60 secondes
   },
   beforeDestroy() {
-    clearInterval(this.missionInterval);
+    clearInterval(this.interventionsInterval);
   },
   computed: {
-    ...mapState(["lastMissionTitle"]),
+    ...mapState(["lastInterventionsTitle"]),
   },
   methods: {
-    ...mapActions(['startApp','chooseMission', 'notify']),
+    ...mapActions(['startApp','chooseInterventions', 'notify']),
   }
 }
 </script>
