@@ -35,15 +35,15 @@
         <div class="section interventions">
             <h2>📋 Interventions actuelles</h2>
             <div v-if="screenWidth > 800" class="grid-container-3">
-                <InterventionsComponent v-for="(interventions, index) in interventionssCurrent" :key="index"
+                <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
                     class="interventions-card grid-item" :interventions="interventions" />
             </div>
             <div v-if="screenWidth > 500" class="grid-container-2">
-                <InterventionsComponent v-for="(interventions, index) in interventionssCurrent" :key="index"
+                <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
                     class="interventions-card grid-item" :interventions="interventions" />
             </div>
             <div v-else class="d-flex flex-direction-column align-items-center">
-                <InterventionsComponent v-for="(interventions, index) in interventionssCurrent" :key="index"
+                <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
                     class="interventions-card grid-item mb-10" :interventions="interventions" />
             </div>
         </div>
@@ -75,7 +75,7 @@ export default {
         window.removeEventListener('resize', this.handleResize);
     },
     computed: {
-        ...mapState(['agents', 'interventionssCurrent']),
+        ...mapState(['agents', 'interventionsCurrent']),
         screenWidth() {
             return this.$store.getters.screenWidth;
         }

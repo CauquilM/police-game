@@ -2,8 +2,9 @@
     <div>
         <h1 class="mb-25">Investigations Bureau</h1>
         <div :class="screenWidth > 500 ? 'grid-container-2' : 'd-flex flex-direction-column align-items-center mb-15'">
-            <div :class="screenWidth > 500 ? 'investigation-card grid-item' : 'investigation-card grid-item mb-15'" v-for="investigation in investigations" :key="investigation.id"
-            :investigation="investigation" @click="openInvestigation(investigation)">
+            <div :class="screenWidth > 500 ? 'investigation-card grid-item' : 'investigation-card grid-item mb-15'"
+                v-for="investigation in investigationsStore" :key="investigation.id" :investigation="investigation"
+                @click="openInvestigation(investigation)">
                 {{ investigation.titre }}
             </div>
         </div>
@@ -18,7 +19,7 @@ export default {
         return {}
     },
     computed: {
-        ...mapState(['investigations'])
+        ...mapState(['investigationsStore'])
     },
     methods: {
         openInvestigation(investigation) {

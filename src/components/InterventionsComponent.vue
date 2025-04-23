@@ -49,7 +49,7 @@ export default {
         interventions: Object
     },
     computed: {
-        ...mapState(['agents',]),
+        ...mapState(['agents']),
         statusLabelComputed() {
             let statusLabelData;
             switch (this.interventions.status) {

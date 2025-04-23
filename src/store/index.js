@@ -10,7 +10,7 @@ export default new Vuex.Store({
     lastInterventionsTitle: String,
     interventionsCurrent: [],
     interventionsStore: [],
-    investigations: [],
+    investigationsStore: [],
     screenWidth: document.documentElement.clientWidth,
     notifications: []
   },
@@ -76,16 +76,36 @@ export default new Vuex.Store({
     },
     SET_AGENTS(state, agentsApi) {
       state.agents = agentsApi;
+    },
+    SET_INTERVENTIONS(state, interventionsApi) {
+      state.interventionsStore = interventionsApi;
+    },
+    SET_INVESTIGATIONS(state, investigationsApi) {
+      state.investigationsStore = investigationsApi;
     }
   },
   actions: {
     startApp({ dispatch }) {
       dispatch("getAgentsFromApi");
+      dispatch("getInterventionsFromApi");
+      dispatch("getInvestigationsFromApi");
     },
     getAgentsFromApi({ commit }) {
       axios.get("http://localhost:3000/agents")
         .then((res) => {
           commit("SET_AGENTS", res.data)
+        })
+    },
+    getInterventionsFromApi({ commit }) {
+      axios.get("http://localhost:3000/interventions")
+        .then((res) => {
+          commit("SET_INTERVENTIONS", res.data)
+        })
+    },
+    getInvestigationsFromApi({ commit }) {
+      axios.get("http://localhost:3000/investigations")
+        .then((res) => {
+          commit("SET_INVESTIGATIONS", res.data)
         })
     },
     notify({ commit }, { title, message, type }) {
