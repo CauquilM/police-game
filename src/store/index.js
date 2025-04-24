@@ -23,7 +23,6 @@ export default new Vuex.Store({
       const indexInterventions = state.interventionsCurrent.findIndex(m => m.id === interventionsId);
       const interventions = state.interventionsCurrent[indexInterventions];
       if (agent && !agent.busy && !interventions.assignedAgentsId.includes(agentId)) {
-        console.log("enter");
         agent.busy = true
         interventions.assignedAgentsId.push(agentId)
       }
@@ -49,10 +48,7 @@ export default new Vuex.Store({
       interventions.assignedAgentsId = []
     },
     SET_CHOSEN_INTERVENTIONS(state, index) {
-      console.log("mutation: " + state.interventionsStore[index].title);
       state.lastInterventionsTitle = state.interventionsStore[index].title;
-      console.log('test title: ' + state.interventionsStore[index].title);
-      console.log('test include: ' + state.interventionsCurrent.includes(state.interventionsStore[index]));
       if (!state.interventionsCurrent.includes(state.interventionsStore[index])) {
         state.interventionsCurrent.push(state.interventionsStore[index]);
       }
@@ -91,19 +87,19 @@ export default new Vuex.Store({
       dispatch("getInvestigationsFromApi");
     },
     getAgentsFromApi({ commit }) {
-      axios.get("http://localhost:3000/agents")
+      axios.get("https://police-api-two.vercel.app/agents/agents")
         .then((res) => {
           commit("SET_AGENTS", res.data)
         })
     },
     getInterventionsFromApi({ commit }) {
-      axios.get("http://localhost:3000/interventions")
+      axios.get("https://police-api-two.vercel.app/agents/interventions")
         .then((res) => {
           commit("SET_INTERVENTIONS", res.data)
         })
     },
     getInvestigationsFromApi({ commit }) {
-      axios.get("http://localhost:3000/investigations")
+      axios.get("https://police-api-two.vercel.app/agents/investigations")
         .then((res) => {
           commit("SET_INVESTIGATIONS", res.data)
         })
@@ -122,15 +118,12 @@ export default new Vuex.Store({
       commit("SET_HEAL_AGENT", agentId);
 
       setTimeout(() => {
-        axios.put("http://localhost:3000/agents/healAgent",
+        axios.put("https://police-api-two.vercel.app/agents/agents/healAgent",
           { id: agent.id }
         )
-        .then((res) => {
-          console.log("heal: " + res.data);
-        })
-        .catch((err) => {
-          console.log("heal: " + err);
-        })
+          .then(() => {
+            dispatch("getAgentsFromApi");
+          })
         agent.isInHospital = false;
         dispatch('notify', {
           title: `Agent ${agent.name} recovered from hospital`,
@@ -147,50 +140,20 @@ export default new Vuex.Store({
     },
     chooseInterventions({ state, commit }) {
       let index = Math.round(Math.random() * state.interventionsStore.length - 1);
-      console.log("index: " + index);
       if (index != -1) {
         commit("SET_CHOSEN_INTERVENTIONS", index);
       }
     },
-    chancesOfInjured(_, { agent, interventions }) {
-      let index;
-      console.log('injured interventions: ' + interventions);
-      console.log("enter injured");
-      switch (interventions.difficulty) {
-        case 1:
-          index = Math.round(Math.random() * 10)
-          console.log('index: ' + index);
-          agent.health -= 10
-          break;
-
-        case 2:
-          index = Math.round(Math.random() * 20)
-          console.log('index: ' + index);
-          agent.health -= 20
-          break;
-
-        case 3:
-          index = Math.round(Math.random() * 30)
-          console.log('index: ' + index);
-          agent.health -= 30
-          break;
-
-        case 4:
-          index = Math.round(Math.random() * 40)
-          console.log('index: ' + index);
-          agent.health -= 40
-          break;
-
-        case interventions.difficulty >= 5:
-          index = Math.round(Math.random() * 50)
-          console.log('index: ' + index);
-          agent.health -= 50
-          break;
-
-        default:
-          break;
+    chancesOfInjured({ dispatch }, { agent, interventions }) {
+      let chances = Math.round(Math.random() * 100);
+      console.log("chances: " + chances);
+      if (chances <= 15) {
+        let damage = interventions.difficulty * 5;
+        axios.put("https://police-api-two.vercel.app/agents/hurtAgent", { id: agent.id, damage: damage })
+          .then(() => {
+            dispatch("getAgentsFromApi");
+          })
       }
-      console.log("agent injured: " + agent);
     },
     resolveInterventions({ state, commit, dispatch }, interventionsId) {
       this.patrolStatus = "🚓💨 En route"
@@ -215,7 +178,6 @@ export default new Vuex.Store({
         + (agent.equipment.includes("taser") ? 1 : 0)
         + (agent.equipment.includes("nightstick") ? 1 : 0),
         0)
-      console.log("totalForce: " + totalForce);
 
       const chance = dispatch("estimateSuccessProbability", {
         totalForce,

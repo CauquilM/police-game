@@ -70,7 +70,6 @@ export default {
         ...mapMutations(['SET_ASSIGN_AGENT']),
         ...mapActions(['resolveInterventions', 'refuseInterventions']),
         assignAgent({ agentId: agentId, interventionsId: interventionsId }) {
-            console.log("agentId front: " + agentId + " interventions: " + interventionsId);
             this.SET_ASSIGN_AGENT({ agentId, interventionsId });
         },
         resolve(interventionsId) {

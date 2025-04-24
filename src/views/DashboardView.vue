@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div v-else>
-                <div v-if="screenWidth > 800" class="grid-container-4">
+                <div v-if="screenWidth > 800" class="grid-container-3">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
                 </div>
@@ -38,7 +38,7 @@
                 <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
                     class="interventions-card grid-item" :interventions="interventions" />
             </div>
-            <div v-if="screenWidth > 500" class="grid-container-2">
+            <div v-else-if="screenWidth > 500" class="grid-container-2">
                 <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
                     class="interventions-card grid-item" :interventions="interventions" />
             </div>
