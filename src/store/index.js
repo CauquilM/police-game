@@ -87,19 +87,19 @@ export default new Vuex.Store({
       dispatch("getInvestigationsFromApi");
     },
     getAgentsFromApi({ commit }) {
-      axios.get("https://police-api-two.vercel.app/agents/agents")
+      axios.get("https://police-api-ten.vercel.app/agents/agents")
         .then((res) => {
           commit("SET_AGENTS", res.data)
         })
     },
     getInterventionsFromApi({ commit }) {
-      axios.get("https://police-api-two.vercel.app/agents/interventions")
+      axios.get("https://police-api-ten.vercel.app/agents/interventions")
         .then((res) => {
           commit("SET_INTERVENTIONS", res.data)
         })
     },
     getInvestigationsFromApi({ commit }) {
-      axios.get("https://police-api-two.vercel.app/agents/investigations")
+      axios.get("https://police-api-ten.vercel.app/agents/investigations")
         .then((res) => {
           commit("SET_INVESTIGATIONS", res.data)
         })
@@ -118,7 +118,7 @@ export default new Vuex.Store({
       commit("SET_HEAL_AGENT", agentId);
 
       setTimeout(() => {
-        axios.put("https://police-api-two.vercel.app/agents/agents/healAgent",
+        axios.put("https://police-api-ten.vercel.app/agents/agents/healAgent",
           { id: agent.id }
         )
           .then(() => {
@@ -149,7 +149,7 @@ export default new Vuex.Store({
       console.log("chances: " + chances);
       if (chances <= 15) {
         let damage = interventions.difficulty * 5;
-        axios.put("https://police-api-two.vercel.app/agents/hurtAgent", { id: agent.id, damage: damage })
+        axios.put("https://police-api-ten.vercel.app/agents/hurtAgent", { id: agent.id, damage: damage })
           .then(() => {
             dispatch("getAgentsFromApi");
           })
