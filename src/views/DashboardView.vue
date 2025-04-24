@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div v-else>
-                <div v-if="screenWidth > 800" class="grid-container-4">
+                <div v-if="screenWidth > 800" class="grid-container-3">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
                 </div>
@@ -32,19 +32,19 @@
                 </div>
             </div>
         </div>
-        <div class="section mission">
-            <h2>📋 Missions actuelles</h2>
+        <div class="section interventions">
+            <h2>📋 Interventions actuelles</h2>
             <div v-if="screenWidth > 800" class="grid-container-3">
-                <MissionComponent v-for="(mission, index) in missionsCurrent" :key="index"
-                    class="mission-card grid-item" :mission="mission" />
+                <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
+                    class="interventions-card grid-item" :interventions="interventions" />
             </div>
-            <div v-if="screenWidth > 500" class="grid-container-2">
-                <MissionComponent v-for="(mission, index) in missionsCurrent" :key="index"
-                    class="mission-card grid-item" :mission="mission" />
+            <div v-else-if="screenWidth > 500" class="grid-container-2">
+                <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
+                    class="interventions-card grid-item" :interventions="interventions" />
             </div>
             <div v-else class="d-flex flex-direction-column align-items-center">
-                <MissionComponent v-for="(mission, index) in missionsCurrent" :key="index"
-                    class="mission-card grid-item mb-10" :mission="mission" />
+                <InterventionsComponent v-for="(interventions, index) in interventionsCurrent" :key="index"
+                    class="interventions-card grid-item mb-10" :interventions="interventions" />
             </div>
         </div>
         <!-- <CarteVilleComponent/>  -->
@@ -54,13 +54,13 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import AgentComponent from '../components/AgentComponent'
-import MissionComponent from '../components/MissionComponent'
+import InterventionsComponent from '../components/InterventionsComponent'
 // import CarteVilleComponent from '../components/CarteVilleComponent'
 
 export default {
     name: "DashboardView",
     components: {
-        MissionComponent,
+        InterventionsComponent,
         AgentComponent,
         // CarteVilleComponent
     },
@@ -75,7 +75,7 @@ export default {
         window.removeEventListener('resize', this.handleResize);
     },
     computed: {
-        ...mapState(['agents', 'missionsCurrent']),
+        ...mapState(['agents', 'interventionsCurrent']),
         screenWidth() {
             return this.$store.getters.screenWidth;
         }
