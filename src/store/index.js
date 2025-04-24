@@ -87,19 +87,19 @@ export default new Vuex.Store({
       dispatch("getInvestigationsFromApi");
     },
     getAgentsFromApi({ commit }) {
-      axios.get("https://police-api-ten.vercel.app/agents/agents")
+      axios.get("https://police-api-ten.vercel.app/agents")
         .then((res) => {
           commit("SET_AGENTS", res.data)
         })
     },
     getInterventionsFromApi({ commit }) {
-      axios.get("https://police-api-ten.vercel.app/agents/interventions")
+      axios.get("https://police-api-ten.vercel.app/interventions")
         .then((res) => {
           commit("SET_INTERVENTIONS", res.data)
         })
     },
     getInvestigationsFromApi({ commit }) {
-      axios.get("https://police-api-ten.vercel.app/agents/investigations")
+      axios.get("https://police-api-ten.vercel.app/investigations")
         .then((res) => {
           commit("SET_INVESTIGATIONS", res.data)
         })
@@ -118,7 +118,7 @@ export default new Vuex.Store({
       commit("SET_HEAL_AGENT", agentId);
 
       setTimeout(() => {
-        axios.put("https://police-api-ten.vercel.app/agents/agents/healAgent",
+        axios.put("https://police-api-ten.vercel.app/agents/healAgent",
           { id: agent.id }
         )
           .then(() => {
