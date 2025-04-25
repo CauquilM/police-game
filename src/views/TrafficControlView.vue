@@ -79,7 +79,7 @@ export default {
                 if (this.vehicles.length < 4) {
                     this.generateVehicle();
                 }
-            }, 2000); // Generate a new vehicle every 2 seconds
+            }, 20000); // Generate a new vehicle every 2 seconds
         },
     },
 }
