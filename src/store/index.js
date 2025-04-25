@@ -171,6 +171,10 @@ export default new Vuex.Store({
         )
           .then(() => {
             dispatch("getAgentsFromApi");
+            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 10 })
+            .then(() => {
+              dispatch("getBudgetFromApi");
+            })
           })
         agent.isInHospital = false;
         dispatch('notify', {
