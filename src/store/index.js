@@ -101,6 +101,13 @@ export default new Vuex.Store({
     vehicleLeaves({ commit }, vehicleId) {
       commit("SET_VEHICLE_LEAVES", vehicleId);
     },
+    fineDriver({ dispatch }, vehicleId) {
+      axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 10 })
+        .then(() => {
+          dispatch("getBudgetFromApi");
+          dispatch("vehicleLeaves", vehicleId);
+        });
+    },
     addVehicle({ commit, dispatch }, vehicle) {
       commit("SET_VEHICLE", vehicle);
       dispatch("incrementVehicleIdCounter");
@@ -172,9 +179,9 @@ export default new Vuex.Store({
           .then(() => {
             dispatch("getAgentsFromApi");
             axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 10 })
-            .then(() => {
-              dispatch("getBudgetFromApi");
-            })
+              .then(() => {
+                dispatch("getBudgetFromApi");
+              })
           })
         agent.isInHospital = false;
         dispatch('notify', {
@@ -210,7 +217,7 @@ export default new Vuex.Store({
         axios.put("https://police-api-ten.vercel.app/agents/hurtAgent", { id: agent.id, damage: damage })
           .then(() => {
             dispatch("getAgentsFromApi");
-          })
+          });
       }
     },
     resolveInterventions({ state, commit, dispatch }, interventionsId) {

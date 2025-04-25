@@ -12,11 +12,11 @@
                 {{ vehicle.speed }} km/h
             </span>
         </h3>
-        <h3 class="d-flex justify-content-flex-start">
+        <!-- <h3 class="d-flex justify-content-flex-start">
             <span class="ml-5">
                 Status: {{ vehicle.status }}
             </span>
-        </h3>
+        </h3> -->
         <div v-if="stopped">
             <h3 class="d-flex justify-content-flex-start">
                 <img class="w-30" src="../assets/steering-wheel.svg" alt="">
@@ -27,13 +27,15 @@
             <ul class="text-left">
                 <li class="list-driver">
                     Name: {{ vehicle.driver.name }}
+                </li><li class="list-driver">
+                    Age: {{ vehicle.driver.age }}
                 </li>
                 <li class="list-driver">
                     Number of points: {{ vehicle.driver.numberOfPoints }}
                 </li>
-                <li class="list-driver">
-                    Wanted: {{ vehicle.driver.isWanted ? "Yes" : "No" }}
-                </li>
+                <!-- <li class="list-driver">
+                    Wanted: {{ vehicle.driver.isWanted }}
+                </li> -->
             </ul>
         </div>
         <div v-if="!stopped" class="d-flex justify-content-space-around">
@@ -41,8 +43,8 @@
             <button @click="vehicleLeaves(vehicle.id)">Let Pass</button>
         </div>
         <div v-if="stopped" class="d-flex justify-content-space-around">
-            <button @click="handleAction(vehicle, 'stop')">Fine</button>
-            <button @click="handleAction(vehicle, 'stop')">Arrest</button>
+            <button @click="fineDriver(vehicle.id)">Fine</button>
+            <button disabled>Arrest</button>
             <button @click="vehicleLeaves(vehicle.id)">Give warning</button>
         </div>
     </div>
@@ -62,7 +64,7 @@ export default {
         vehicle: Object
     },
     methods: {
-        ...mapActions(["vehicleLeaves"]),
+        ...mapActions(["vehicleLeaves", "fineDriver"]),
         handleAction() {
             this.stopped = !this.stopped;
         }
