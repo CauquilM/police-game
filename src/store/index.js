@@ -16,7 +16,7 @@ export default new Vuex.Store({
     notifications: [],
     vehicles: [],
     vehicleIdCounter: 1,
-    budget: 0  
+    budget: 0
   },
   mutations: {
     SET_SCREEN_WIDTH(state, width) {
@@ -112,7 +112,7 @@ export default new Vuex.Store({
       dispatch("getAgentsFromApi");
       dispatch("getInterventionsFromApi");
       dispatch("getInvestigationsFromApi");
-      dispatch("getInvestigationsFromApi");
+      dispatch("getBudgetFromApi");
     },
     getAgentsFromApi({ commit }) {
       axios.get("https://police-api-ten.vercel.app/agents")
@@ -133,9 +133,10 @@ export default new Vuex.Store({
         })
     },
     getBudgetFromApi({ commit }) {
-      axios.get("http://localhost:3000/budget")
+      axios.get("https://police-api-ten.vercel.app/budget")
         .then((res) => {
-          commit("SET_BUDGET", res.data.budget.amount)
+          console.log("budget: " + res.data);
+          commit("SET_BUDGET", res.data)
         })
     },
     notify({ commit }, { title, message, type }) {
@@ -147,7 +148,7 @@ export default new Vuex.Store({
     },
     validateEquipement({ dispatch }, { agentId, equipments }) {
       console.log("validateEquipement: " + agentId);
-      axios.put("http://localhost:3000/agents/manageEquipement",
+      axios.put("https://police-api-ten.vercel.app/agents/manageEquipement",
         { id: agentId, equipment: equipments }
       )
         .then((res) => {
@@ -238,9 +239,15 @@ export default new Vuex.Store({
       })
 
       Promise.resolve(chance).then(probability => {
-        const success = Math.random() < probability
-        commit("SET_INTERVENTIONS_STATUS", { interventions: interventions, status: success ? 'success' : 'fail' })
-        commit("FREE_ASSIGNED_AGENTS", interventions)
+        const success = Math.random() < probability;
+        if (success) {
+          axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 500 })
+            .then(() => {
+              dispatch("getBudgetFromApi");
+            })
+        }
+        commit("SET_INTERVENTIONS_STATUS", { interventions: interventions, status: success ? 'success' : 'fail' });
+        commit("FREE_ASSIGNED_AGENTS", interventions);
       })
     },
     estimateSuccessProbability(_, { totalForce, difficulty }) {

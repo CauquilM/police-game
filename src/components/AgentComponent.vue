@@ -5,7 +5,6 @@
             <span class="rank ml-5 mr-5">{{ agent.rank }}
             </span> <span>{{ agent.name }}</span>
         </h3>
-        <p>Budget: {{ budget }}</p>
         <div v-if="!officeOpen">
             <h3 class="d-flex justify-content-flex-start">
                 <img class="w-30" src="../assets/police-radio.svg" alt="police-radio">
@@ -46,6 +45,7 @@
             <button @click="manageEquipment">Manage equipment</button>
             <button @click="fireAgent(agent.id)">Fire</button>
         </div>
+        <h3 class="mt-10" v-if="officeOpen && manage">Budget: {{ budget }}</h3 >
         <div v-if="officeOpen && manage">
             <div v-for="equipment in equipments" :key="equipment" class="d-flex justify-content-flex-start mt-10">
                 <label>

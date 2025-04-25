@@ -53,7 +53,7 @@ export default {
           type: "radio"
         })
       }
-    }, 60000); // toutes les 60 secondes
+    }, 6000); // toutes les 60 secondes
   },
   beforeDestroy() {
     clearInterval(this.interventionsInterval);
