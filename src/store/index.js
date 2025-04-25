@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     agents: [],
+    equipments: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"],
     lastInterventionsTitle: String,
     interventionsCurrent: [],
     interventionsStore: [],
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     notifications: [],
     vehicles: [],
     vehicleIdCounter: 1,
+    budget: 0  
   },
   mutations: {
     SET_SCREEN_WIDTH(state, width) {
@@ -81,6 +83,9 @@ export default new Vuex.Store({
     SET_INVESTIGATIONS(state, investigationsApi) {
       state.investigationsStore = investigationsApi;
     },
+    SET_BUDGET(state, budgetApi) {
+      state.budget = budgetApi;
+    },
     SET_VEHICLE(state, vehicle) {
       state.vehicles.push(vehicle);
     },
@@ -107,6 +112,7 @@ export default new Vuex.Store({
       dispatch("getAgentsFromApi");
       dispatch("getInterventionsFromApi");
       dispatch("getInvestigationsFromApi");
+      dispatch("getInvestigationsFromApi");
     },
     getAgentsFromApi({ commit }) {
       axios.get("https://police-api-ten.vercel.app/agents")
@@ -126,12 +132,31 @@ export default new Vuex.Store({
           commit("SET_INVESTIGATIONS", res.data)
         })
     },
+    getBudgetFromApi({ commit }) {
+      axios.get("http://localhost:3000/budget")
+        .then((res) => {
+          commit("SET_BUDGET", res.data.budget.amount)
+        })
+    },
     notify({ commit }, { title, message, type }) {
       const id = Date.now() + Math.random();
       commit('SHOW_NOTIFICATION', { id, title, message, type });
       setTimeout(() => {
         commit('HIDE_NOTIFICATION', id);
       }, 4000);
+    },
+    validateEquipement({ dispatch }, { agentId, equipments }) {
+      console.log("validateEquipement: " + agentId);
+      axios.put("http://localhost:3000/agents/manageEquipement",
+        { id: agentId, equipment: equipments }
+      )
+        .then((res) => {
+          dispatch("getAgentsFromApi");
+          console.log("called: " + res.data);
+        })
+        .catch((err) => {
+          console.log("err: " + err);
+        })
     },
     healAgent({ state, commit, dispatch }, agentId) {
       const agent = state.agents.find(a => a.id === agentId);
@@ -153,6 +178,12 @@ export default new Vuex.Store({
           type: "success"
         });
       }, 30000);
+    },
+    fireAgent({ dispatch }, agentId) {
+      axios.delete("https://police-api-ten.vercel.app/agents/hurtAgent", { id: agentId })
+        .then(() => {
+          dispatch("getAgentsFromApi");
+        })
     },
     updateScreenWidth({ commit }) {
       commit('SET_SCREEN_WIDTH', document.documentElement.clientWidth);

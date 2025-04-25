@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-black">
         <h1 class="mb-25">Investigations Bureau</h1>
         <div v-if="screenWidth >= 670" class="grid-container-2">
             <div class="investigation-card grid-item" v-for="investigation in investigationsStore"

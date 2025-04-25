@@ -4,6 +4,7 @@ import DashboardView from '../views/DashboardView.vue'
 import TrafficControlView from '../views/TrafficControlView.vue'
 import InvestigationsView from '../views/InvestigationsView.vue'
 import InvestigationsDetailsComponent from '../views/InvestigationsDetailsComponent.vue'
+import OfficeView from '../views/OfficeView.vue'
 
 Vue.use(VueRouter)
 
@@ -28,7 +29,12 @@ const routes = [
     name: 'InvestigationsDetailsComponent',
     component: InvestigationsDetailsComponent,
     props: true
-  }
+  },
+  {
+    path: '/office',
+    name: 'office',
+    component: OfficeView
+  },
 ]
 
 const router = new VueRouter({

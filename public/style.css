@@ -12,6 +12,7 @@ body {
     border-radius: 12px;
     margin: auto;
     width: 80%;
+    color: black;
 }
 
 .notification-wrapper {
