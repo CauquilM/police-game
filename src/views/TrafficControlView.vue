@@ -25,10 +25,7 @@ export default {
         TrafficComponent
     },
     data() {
-        return {
-            vehicles: [],
-            vehicleIdCounter: 1,
-        }
+        return {}
     },
     created() {
         this.autoGenerateVehicles();
@@ -41,14 +38,14 @@ export default {
         window.removeEventListener('resize', this.handleResize);
     },
     computed: {
-        ...mapState(['agents', 'interventionsCurrent']),
+        ...mapState(['agents', 'interventionsCurrent', 'vehicles', 'vehicleIdCounter']),
         ...mapState(['investigationsStore', 'screenWidth']),
         screenWidth() {
             return this.$store.getters.screenWidth;
         }
     },
     methods: {
-        ...mapActions(['updateScreenWidth']),
+        ...mapActions(['updateScreenWidth', 'addVehicle', 'incrementVehicleIdCounter']),
         handleResize() {
             this.updateScreenWidth();
         },
@@ -57,7 +54,7 @@ export default {
             const speed = Math.floor(Math.random() * 50) + 20; // Random speed between 20 and 140 km/h
             const status = speed > 50 ? 'Speeding' : 'Normal';
             const vehicle = {
-                id: this.vehicleIdCounter++,
+                id: this.vehicleIdCounter,
                 plate: plate,
                 speed: speed,
                 status: status,
@@ -67,7 +64,7 @@ export default {
                     isWanted: false
                 }
             };
-            this.vehicles.push(vehicle);
+            this.addVehicle(vehicle);
         },
         autoGenerateVehicles() {
             setInterval(() => {

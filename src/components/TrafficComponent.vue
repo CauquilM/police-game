@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: "TrafficControlView",
     data(){
@@ -53,12 +55,9 @@ export default {
         vehicle: Object
     },
     methods: {
+        ...mapActions(["vehicleLeaves"]),
         handleAction() {
             this.stopped = !this.stopped;
-        },
-        vehicleLeaves(vehicleId) {
-            const indexVehicle = this.vehicles.findIndex(m => m.id === vehicleId);
-            this.vehicles.splice(indexVehicle, 1);
         }
     }
 }

@@ -12,7 +12,9 @@ export default new Vuex.Store({
     interventionsStore: [],
     investigationsStore: [],
     screenWidth: document.documentElement.clientWidth,
-    notifications: []
+    notifications: [],
+    vehicles: [],
+    vehicleIdCounter: 1,
   },
   mutations: {
     SET_SCREEN_WIDTH(state, width) {
@@ -78,9 +80,29 @@ export default new Vuex.Store({
     },
     SET_INVESTIGATIONS(state, investigationsApi) {
       state.investigationsStore = investigationsApi;
+    },
+    SET_VEHICLE(state, vehicle) {
+      state.vehicles.push(vehicle);
+    },
+    SET_VEHICLE_ID_COUNTER(state) {
+      state.vehicleIdCounter += 1;
+    },
+    SET_VEHICLE_LEAVES(state, vehicleId) {
+      const indexVehicle = state.vehicles.findIndex(m => m.id === vehicleId);
+      state.vehicles.splice(indexVehicle, 1);
     }
   },
   actions: {
+    vehicleLeaves({ commit }, vehicleId) {
+      commit("SET_VEHICLE_LEAVES", vehicleId);
+    },
+    addVehicle({ commit, dispatch }, vehicle) {
+      commit("SET_VEHICLE", vehicle);
+      dispatch("incrementVehicleIdCounter");
+    },
+    incrementVehicleIdCounter({ commit }) {
+      commit("SET_VEHICLE_ID_COUNTER");
+    },
     startApp({ dispatch }) {
       dispatch("getAgentsFromApi");
       dispatch("getInterventionsFromApi");
