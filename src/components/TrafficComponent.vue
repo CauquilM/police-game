@@ -28,13 +28,13 @@
             </span>
         </h3>
         <ul v-if="stopped" class="text-left">
-            <li>
+            <li class="list-driver">
                 Name: {{ vehicle.driver.name }}
             </li>
-            <li>
+            <li class="list-driver">
                 Number of points: {{ vehicle.driver.numberOfPoints }}
             </li>
-            <li>
+            <li class="list-driver">
                 Wanted: {{ vehicle.driver.isWanted ? "Yes" : "No" }}
             </li>
         </ul>
