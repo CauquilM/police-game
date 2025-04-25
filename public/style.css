@@ -3,6 +3,7 @@ body {
     display: flex;
     justify-content: center;
     font-family: 'Segoe UI', sans-serif;
+    color: #fff;
 }
 
 .investigation-card {
@@ -75,7 +76,6 @@ body {
 
 .dashboard {
     background-color: #1e2a38;
-    color: #fff;
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
 }
@@ -217,7 +217,8 @@ h2 {
 }
 
 .agent-card,
-.interventions-card {
+.interventions-card,
+.traffic-card {
     background: #2e3b4e;
     padding: 15px;
     border-radius: 10px;

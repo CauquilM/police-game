@@ -8,7 +8,7 @@
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
                 </div>
-                <div v-else-if="screenWidth > 500" class="grid-container-3">
+                <div v-else-if="screenWidth > 670" class="grid-container-3">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
                 </div>
@@ -22,7 +22,7 @@
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
                 </div>
-                <div v-else-if="screenWidth > 500" class="grid-container-2">
+                <div v-else-if="screenWidth > 670" class="grid-container-2">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
                 </div>

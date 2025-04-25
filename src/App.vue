@@ -5,6 +5,10 @@
           src="./assets/police-car-patroling.svg" alt="">
         <p>Patrol</p>
       </router-link>
+      <router-link to="/traffic-control" class="d-flex align-items-center"><img class="w-30 mr-5"
+          src="./assets/traffic-lights.svg" alt="">
+        <p>Traffic Control</p>
+      </router-link>
       <router-link to="/investigations" class="d-flex align-items-center"><img class="w-30 mr-5"
           src="./assets/detectives-badge.svg" alt="">
         <p>Investigations Bureau</p>

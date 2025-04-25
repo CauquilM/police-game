@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
+import TrafficControlView from '../views/TrafficControlView.vue'
 import InvestigationsView from '../views/InvestigationsView.vue'
 import InvestigationsDetailsComponent from '../views/InvestigationsDetailsComponent.vue'
 
@@ -11,6 +12,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: DashboardView
+  },
+  {
+    path: '/traffic-control',
+    name: 'traffic-control',
+    component: TrafficControlView
   },
   {
     path: '/investigations',
