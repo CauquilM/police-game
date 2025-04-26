@@ -47,12 +47,14 @@
             <button @click="manageEquipment">Manage equipment</button>
             <button @click="fireAgent(agent.id)">Fire</button>
         </div>
-        <h3 class="mt-10" v-if="officeOpen && manage">Budget: {{ budget }}</h3>
-        <h3 class="mt-10" v-if="officeOpen && manage">totalPrice: {{ totalPrice }}</h3>
+        <div class="d-flex justify-content-flex-start mt-10">
+            <h3 class="mr-10" v-if="officeOpen && manage">Budget: {{ budget }}</h3>
+            <h3 v-if="officeOpen && manage">Price: {{ totalPrice }}</h3>
+        </div>
         <div v-if="officeOpen && manage">
             <div v-for="equipment in equipments" :key="equipment" class="d-flex justify-content-flex-start mt-10">
                 <label>
-                    <input type="checkbox" :value="equipment" v-model="agentEquipment">
+                    <input :disabled="agent.equipment.includes('police car') && equipment === 'police car'" type="checkbox" :value="equipment" v-model="agentEquipment">
                     {{ equipment }}
                 </label>
             </div>
@@ -75,27 +77,17 @@ export default {
             totalPrice: 0,
             isMounted: false,
             agentEquipmentSize: 0,
-
+            equipments: ["handgun", "police-vest", "handcuffs", "taser", "nightstick", "police car"],
         }
     },
     watch: {
         agentEquipment: {
-            handler(equipmentChecked) {
-                if (equipmentChecked == "police car") {
-                    if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
-                        this.totalPrice -= 20000;
-                    }
-                    else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
-                        this.totalPrice += 20000;
-                        }
+            handler() {
+                if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
+                    this.totalPrice -= 10000;
                 }
-                else if (equipmentChecked != "") {
-                    if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
-                        this.totalPrice -= 3000;
-                    }
-                    else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
-                        this.totalPrice += 3000;
-                        }
+                else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
+                    this.totalPrice += 10000;
                 }
                 else {
                     this.isMounted = !this.isMounted;

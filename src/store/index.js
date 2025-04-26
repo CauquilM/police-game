@@ -178,7 +178,7 @@ export default new Vuex.Store({
         )
           .then(() => {
             dispatch("getAgentsFromApi");
-            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 50 })
+            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 100 })
               .then(() => {
                 dispatch("getBudgetFromApi");
               })
@@ -252,7 +252,7 @@ export default new Vuex.Store({
       Promise.resolve(chance).then(probability => {
         const success = Math.random() < probability;
         if (success) {
-          axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 100 })
+          axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 25 })
             .then(() => {
               dispatch("getBudgetFromApi");
             })
