@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     agents: [],
-    equipments: ["handgun", "police-vest", "handcuffs", "taser", "nightstick"],
+    equipments: ["handgun", "police-vest", "handcuffs", "taser", "nightstick", "police car"],
     lastInterventionsTitle: String,
     interventionsCurrent: [],
     interventionsStore: [],
@@ -142,7 +142,6 @@ export default new Vuex.Store({
     getBudgetFromApi({ commit }) {
       axios.get("https://police-api-ten.vercel.app/budget")
         .then((res) => {
-          console.log("budget: " + res.data);
           commit("SET_BUDGET", res.data)
         })
     },
@@ -153,13 +152,14 @@ export default new Vuex.Store({
         commit('HIDE_NOTIFICATION', id);
       }, 4000);
     },
-    validateEquipement({ dispatch }, { agentId, equipments }) {
+    modifyAgentEquipement({ dispatch }, { agentId, equipments, totalPrice }) {
       console.log("validateEquipement: " + agentId);
-      axios.put("https://police-api-ten.vercel.app/agents/manageEquipement",
-        { id: agentId, equipment: equipments }
+      axios.put("http://localhost:3000/agents/manageEquipement",
+        { id: agentId, equipment: equipments, amount: totalPrice }
       )
         .then((res) => {
           dispatch("getAgentsFromApi");
+          dispatch("getBudgetFromApi");
           console.log("called: " + res.data);
         })
         .catch((err) => {
@@ -178,7 +178,7 @@ export default new Vuex.Store({
         )
           .then(() => {
             dispatch("getAgentsFromApi");
-            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 10 })
+            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 50 })
               .then(() => {
                 dispatch("getBudgetFromApi");
               })

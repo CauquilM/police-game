@@ -32,6 +32,8 @@
             </div>
         </div>
         <div class="equipment-bag">
+            <img v-if="agent.equipment.includes('police car')" class="equipment" src="../assets/police-car-patroling.svg"
+                alt="handcuffs">
             <img v-if="agent.equipment.includes('handcuffs')" class="equipment" src="../assets/handcuffs.svg"
                 alt="handcuffs">
             <img v-if="agent.equipment.includes('nightstick')" class="equipment" src="../assets/nightstick.svg"
@@ -45,7 +47,8 @@
             <button @click="manageEquipment">Manage equipment</button>
             <button @click="fireAgent(agent.id)">Fire</button>
         </div>
-        <h3 class="mt-10" v-if="officeOpen && manage">Budget: {{ budget }}</h3 >
+        <h3 class="mt-10" v-if="officeOpen && manage">Budget: {{ budget }}</h3>
+        <h3 class="mt-10" v-if="officeOpen && manage">totalPrice: {{ totalPrice }}</h3>
         <div v-if="officeOpen && manage">
             <div v-for="equipment in equipments" :key="equipment" class="d-flex justify-content-flex-start mt-10">
                 <label>
@@ -53,7 +56,9 @@
                     {{ equipment }}
                 </label>
             </div>
-            <button @click="validateEquipement({agentId: agent.id, equipments: agentEquipment})">Validate</button>
+            <h3 class="mt-10" v-if="budget < totalPrice * -1">Not enough money</h3>
+            <button v-else
+                @click="validateAgentEquipement({ agentId: agent.id, equipments: agentEquipment, totalPrice: totalPrice })">Validate</button>
         </div>
     </div>
 </template>
@@ -66,12 +71,35 @@ export default {
     data() {
         return {
             agentEquipment: [],
-            manage: false
+            manage: false,
+            totalPrice: 0,
+            isMounted: false,
+            agentEquipmentSize: 0,
 
         }
     },
+    watch: {
+        agentEquipment: {
+            handler() {
+                if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
+                    this.totalPrice -= 3000;
+                    this.agent.equipment.includes("police car") ? '' : this.totalPrice -= 20000;
+                }
+                else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
+                    this.totalPrice += 3000;
+                    this.agent.equipment.includes("police car") ? '' : this.totalPrice += 20000;
+                }
+                else {
+                    this.isMounted = !this.isMounted;
+                }
+                this.agentEquipmentSize = this.agentEquipment.length;
+            },
+            deep: true
+        }
+    },
     mounted() {
-        this.agentEquipment = this.agent.equipment
+        this.agentEquipment = this.agent.equipment;
+        this.agentEquipmentSize = this.agentEquipment.length;
     },
     props: {
         agent: Object,
@@ -84,9 +112,13 @@ export default {
         ...mapState(["equipments", "budget"])
     },
     methods: {
-        ...mapActions(["healAgent", "fireAgent", "validateEquipement"]),
-        manageEquipment(){
+        ...mapActions(["healAgent", "fireAgent", "modifyAgentEquipement"]),
+        manageEquipment() {
             this.manage = !this.manage;
+        },
+        validateAgentEquipement({ agentId: agentId, equipments: agentEquipment, totalPrice: totalPrice }) {
+            this.modifyAgentEquipement({ agentId: agentId, equipments: agentEquipment, totalPrice: totalPrice });
+            this.totalPrice = 0;
         }
     }
 }
