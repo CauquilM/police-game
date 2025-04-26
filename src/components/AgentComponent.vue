@@ -32,8 +32,8 @@
             </div>
         </div>
         <div class="equipment-bag">
-            <img v-if="agent.equipment.includes('police car')" class="equipment" src="../assets/police-car-patroling.svg"
-                alt="handcuffs">
+            <img v-if="agent.equipment.includes('police car')" class="equipment"
+                src="../assets/police-car-patroling.svg" alt="handcuffs">
             <img v-if="agent.equipment.includes('handcuffs')" class="equipment" src="../assets/handcuffs.svg"
                 alt="handcuffs">
             <img v-if="agent.equipment.includes('nightstick')" class="equipment" src="../assets/nightstick.svg"
@@ -80,20 +80,29 @@ export default {
     },
     watch: {
         agentEquipment: {
-            handler() {
-                if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
-                    this.totalPrice -= 3000;
-                    this.agent.equipment.includes("police car") ? '' : this.totalPrice -= 20000;
+            handler(equipmentChecked) {
+                if (equipmentChecked == "police car") {
+                    if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
+                        this.totalPrice -= 20000;
+                    }
+                    else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
+                        this.totalPrice += 20000;
+                        }
                 }
-                else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
-                    this.totalPrice += 3000;
-                    this.agent.equipment.includes("police car") ? '' : this.totalPrice += 20000;
+                else if (equipmentChecked != "") {
+                    if (this.agentEquipment.length > this.agentEquipmentSize && this.isMounted) {
+                        this.totalPrice -= 3000;
+                    }
+                    else if (this.agentEquipment.length < this.agentEquipmentSize && this.isMounted) {
+                        this.totalPrice += 3000;
+                        }
                 }
                 else {
                     this.isMounted = !this.isMounted;
                 }
                 this.agentEquipmentSize = this.agentEquipment.length;
             },
+
             deep: true
         }
     },

@@ -154,7 +154,7 @@ export default new Vuex.Store({
     },
     modifyAgentEquipement({ dispatch }, { agentId, equipments, totalPrice }) {
       console.log("validateEquipement: " + agentId);
-      axios.put("http://localhost:3000/agents/manageEquipement",
+      axios.put("https://police-api-ten.vercel.app/agents/manageEquipement",
         { id: agentId, equipment: equipments, amount: totalPrice }
       )
         .then((res) => {
