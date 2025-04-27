@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
+import agent_names_data from '../data/suspect_names.json'
 
 Vue.use(Vuex)
 
@@ -95,9 +96,25 @@ export default new Vuex.Store({
     SET_VEHICLE_LEAVES(state, vehicleId) {
       const indexVehicle = state.vehicles.findIndex(m => m.id === vehicleId);
       state.vehicles.splice(indexVehicle, 1);
-    }
+    },
   },
   actions: {
+    recruitNewAgent({ dispatch }) {
+      axios.post("http://localhost:3000/agents",
+        {
+          name: agent_names_data.lastName[Math.floor(Math.random() * agent_names_data.lastName.length)],
+          health: 100,
+          isInHospital: false,
+          level: 1,
+          busy: false,
+          rank: "Intern",
+          equipment: []
+        })
+        .then(() => {
+          dispatch("getAgentsFromApi");
+          dispatch("getBudgetFromApi");
+        })
+    },
     vehicleLeaves({ commit }, vehicleId) {
       commit("SET_VEHICLE_LEAVES", vehicleId);
     },

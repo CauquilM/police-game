@@ -18,6 +18,10 @@
                 <img @click="healAgent(agent.id)" class="w-30" src="../assets/health.svg" alt="health">
                 <span class="ml-5">Bad {{ agent.health }}</span>
             </div>
+            <div v-if="!agent.equipment.includes('police car')" class="d-flex align-items-center">
+                <img class="w-30" src="../assets/police-station.svg" alt="police station">
+                <span class="ml-5">In stations</span>
+            </div>
             <div v-if="agent.isInHospital" class="d-flex align-items-center">
                 <img class="w-30" src="../assets/hospital.svg" alt="hospital">
                 <span class="ml-5">In hospital</span>
@@ -45,7 +49,7 @@
         </div>
         <div v-if="officeOpen" class="d-flex justify-content-space-around">
             <button @click="manageEquipment">Manage equipment</button>
-            <button @click="fireAgent(agent.id)">Fire</button>
+            <button>Fire</button>
         </div>
         <div class="d-flex justify-content-flex-start mt-10">
             <h3 class="mr-10" v-if="officeOpen && manage">Budget: {{ budget }}</h3>
@@ -54,7 +58,7 @@
         <div v-if="officeOpen && manage">
             <div v-for="equipment in equipments" :key="equipment" class="d-flex justify-content-flex-start mt-10">
                 <label>
-                    <input :disabled="agent.equipment.includes('police car') && equipment === 'police car'" type="checkbox" :value="equipment" v-model="agentEquipment">
+                    <input :disabled="!agent.equipment.includes('police car') && equipment === 'police car'" type="checkbox" :value="equipment" v-model="agentEquipment">
                     {{ equipment }}
                 </label>
             </div>
@@ -77,7 +81,6 @@ export default {
             totalPrice: 0,
             isMounted: false,
             agentEquipmentSize: 0,
-            equipments: ["handgun", "police-vest", "handcuffs", "taser", "nightstick", "police car"],
         }
     },
     watch: {

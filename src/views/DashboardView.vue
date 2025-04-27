@@ -4,31 +4,37 @@
         <div class="section agents">
             <h2 class="mb-25">👮 Available units</h2>
             <div v-if="agents.length > 3">
-                <div v-if="screenWidth > 800" class="grid-container-4">
+                <div v-if="screenWidth > 800" class="grid-container-4 align-items-center">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
+                        <button v-if="budget >= 10000" @click="recruitNewAgent" class="grid-item">Add new agent</button>
                 </div>
-                <div v-else-if="screenWidth > 670" class="grid-container-3">
+                <div v-else-if="screenWidth > 670" class="grid-container-3 align-items-center">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
+                        <button v-if="budget >= 10000" @click="recruitNewAgent" class="grid-item">Add new agent</button>
                 </div>
                 <div v-else class="d-flex flex-direction-column align-items-center">
                     <AgentComponent class="agent-card grid-item mb-15" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
+                        <button v-if="budget >= 10000" @click="recruitNewAgent" class="grid-item">Add new agent</button>
                 </div>
             </div>
             <div v-else>
-                <div v-if="screenWidth > 800" class="grid-container-3">
+                <div v-if="screenWidth > 800" class="grid-container-3 align-items-center">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
+                        <button v-if="budget >= 10000" @click="recruitNewAgent" class="grid-item">Add new agent</button>
                 </div>
-                <div v-else-if="screenWidth > 670" class="grid-container-2">
+                <div v-else-if="screenWidth > 670" class="grid-container-2 align-items-center">
                     <AgentComponent class="agent-card grid-item" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
+                        <button v-if="budget >= 10000" @click="recruitNewAgent" class="grid-item">Add new agent</button>
                 </div>
                 <div v-else class="d-flex flex-direction-column align-items-center">
                     <AgentComponent class="agent-card grid-item mb-15" v-for="agent in agents" :key="agent.id"
                         :agent="agent" />
+                        <button v-if="budget >= 10000" @click="recruitNewAgent" class="grid-item">Add new agent</button>
                 </div>
             </div>
         </div>
@@ -75,13 +81,13 @@ export default {
         window.removeEventListener('resize', this.handleResize);
     },
     computed: {
-        ...mapState(['agents', 'interventionsCurrent']),
+        ...mapState(['agents', 'interventionsCurrent', 'budget']),
         screenWidth() {
             return this.$store.getters.screenWidth;
         }
     },
     methods: {
-        ...mapActions(['updateScreenWidth']),
+        ...mapActions(['updateScreenWidth', 'recruitNewAgent']),
         handleResize() {
             this.updateScreenWidth();
         },
