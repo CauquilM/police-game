@@ -69,7 +69,7 @@
         </div>
         <div v-if="stopped && !fined" class="d-flex justify-content-space-around">
             <button @click="showFine">Fine</button>
-            <button disabled>Arrest</button>
+            <button @click="vehicleLeaves(vehicle.id)">Arrest</button>
             <button @click="vehicleLeaves(vehicle.id)">Give warning</button>
         </div>
         <div v-if="stopped && fined">
