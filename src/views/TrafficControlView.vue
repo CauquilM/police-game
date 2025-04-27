@@ -64,12 +64,23 @@ export default {
                 id: this.vehicleIdCounter,
                 plate: plate,
                 speed: speed,
-                // status: status,
                 driver: {
                     name: this.generateName(),
-                    age: `${Math.floor(Math.random() * 41) + 20}`,
-                    numberOfPoints: `${Math.floor(Math.random() * 12) + 1}`,
-                    // isWanted: `${Math.floor(Math.random() * 10) > 4    ? "true" : "false"}`,
+                    age: Math.floor(Math.random() * 41) + 20, // age entre 20 et 60
+                    numberOfPoints: Math.floor(Math.random() * 12) + 1, // permis à points
+                    licenseValid: Math.random() < 0.9, // 90% des conducteurs ont un permis valide
+                    isWanted: Math.random() < 0.1, // 10% des conducteurs sont recherchés
+                    previouslyFined: Math.random() < 0.1, // 10% ont des antécédents
+                    vehicleCondition: [
+                        "Good", "Good", "Good",
+                        "Good", "Good",
+                        "Damaged", "Damaged", "Damaged",
+                        "Very Damaged", "Very Damaged"
+                    ][Math.floor(Math.random() * 3)], // état du véhicule
+                    behavior: ["Calm", "Calm", "Calm",
+                        "Calm", "Calm",
+                        "Nervous", "Nervous", "Nervous",
+                        "Aggressive", "Aggressive"][Math.floor(Math.random() * 3)], // comportement du conducteur
                 }
             };
             this.addVehicle(vehicle);
@@ -79,7 +90,7 @@ export default {
                 if (this.vehicles.length < 4) {
                     this.generateVehicle();
                 }
-            }, 20000); // Generate a new vehicle every 2 seconds
+            }, 10000); // Generate a new vehicle every 2 seconds
         },
     },
 }

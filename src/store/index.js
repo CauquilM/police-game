@@ -118,8 +118,8 @@ export default new Vuex.Store({
     vehicleLeaves({ commit }, vehicleId) {
       commit("SET_VEHICLE_LEAVES", vehicleId);
     },
-    fineDriver({ dispatch }, vehicleId) {
-      axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 10 })
+    fineDriver({ dispatch }, {vehicleId, amount}) {
+      axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: amount })
         .then(() => {
           dispatch("getBudgetFromApi");
           dispatch("vehicleLeaves", vehicleId);
@@ -195,7 +195,7 @@ export default new Vuex.Store({
         )
           .then(() => {
             dispatch("getAgentsFromApi");
-            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 100 })
+            axios.put("https://police-api-ten.vercel.app/budget/pay", { amount: 1000 })
               .then(() => {
                 dispatch("getBudgetFromApi");
               })
@@ -269,7 +269,7 @@ export default new Vuex.Store({
       Promise.resolve(chance).then(probability => {
         const success = Math.random() < probability;
         if (success) {
-          axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 25 })
+          axios.put("https://police-api-ten.vercel.app/budget/refund", { amount: 100 })
             .then(() => {
               dispatch("getBudgetFromApi");
             })

@@ -47,6 +47,10 @@ body {
     background-color: #e74c3c;
 }
 
+.pl-0 {
+    padding-left: 0;
+}
+
 .ml-5 {
     margin-left: 5px;
 }
@@ -210,12 +214,10 @@ body {
 }
 
 .list-driver {
-    background: url('./assets/id-card.svg') no-repeat left;
-    background-size: 2.3rem;
     height: 34px;
     padding-top: 7px;
-    padding-left: 48px;
     padding-right: 5px;
+    list-style: none;
 }
 
 .text-left {
