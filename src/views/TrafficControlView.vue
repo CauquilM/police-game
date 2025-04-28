@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Traffic Control</h1>
+        <h1 class="d-flex align-items-center justify-content-center"><img class="w-45" src="../assets/50-speed-limit.svg" alt=""><span class="ml-5 mb-5"> Traffic Control</span></h1>
         <div>
             <div v-if="vehicles.length > 0 && screenWidth >= 670" class="grid-container-2">
                 <div v-for="vehicle in vehicles" :key="vehicle.id" class="traffic-card grid-item">
@@ -74,13 +74,13 @@ export default {
                     vehicleCondition: [
                         "Good", "Good", "Good",
                         "Good", "Good",
-                        "Damaged", "Damaged", "Damaged",
+                        "Good", "Damaged", "Damaged",
                         "Very Damaged", "Very Damaged"
-                    ][Math.floor(Math.random() * 3)], // état du véhicule
+                    ][Math.floor(Math.random() * 11)], // état du véhicule
                     behavior: ["Calm", "Calm", "Calm",
                         "Calm", "Calm",
-                        "Nervous", "Nervous", "Nervous",
-                        "Aggressive", "Aggressive"][Math.floor(Math.random() * 3)], // comportement du conducteur
+                        "Calm", "Nervous", "Nervous",
+                        "Aggressive", "Aggressive"][Math.floor(Math.random() * 11)], // comportement du conducteur
                 }
             };
             this.addVehicle(vehicle);

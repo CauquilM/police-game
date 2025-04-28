@@ -141,6 +141,10 @@ body {
     width: 30px;
 }
 
+.w-45 {
+    width: 45px;
+}
+
 .d-flex {
     display: flex;
 }

@@ -57,8 +57,8 @@
         </div>
         <div v-if="officeOpen && manage">
             <div v-for="equipment in equipments" :key="equipment" class="d-flex justify-content-flex-start mt-10">
-                <label>
-                    <input :disabled="!agent.equipment.includes('police car') && equipment === 'police car'" type="checkbox" :value="equipment" v-model="agentEquipment">
+                <label v-if="equipment != 'police car'">
+                    <input type="checkbox" :value="equipment" v-model="agentEquipment">
                     {{ equipment }}
                 </label>
             </div>
@@ -97,7 +97,6 @@ export default {
                 }
                 this.agentEquipmentSize = this.agentEquipment.length;
             },
-
             deep: true
         }
     },
